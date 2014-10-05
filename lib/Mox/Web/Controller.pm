@@ -8,12 +8,5 @@ has model => (
     required => 1,
 );
 
-has view => (
-    is       => 'ro',
-    isa      => 'Text::Xslate',
-    handles  => [qw/ render /],
-    required => 1,
-);
-
 __PACKAGE__->meta->make_immutable;
 1;

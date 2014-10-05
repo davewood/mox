@@ -2,6 +2,13 @@ package Mox::Web::Controller::Root;
 use Moose;
 extends 'Mox::Web::Controller';
 
+has view => (
+    is       => 'ro',
+    isa      => 'Text::Xslate',
+    handles  => [qw/ render /],
+    required => 1,
+);
+
 sub index {
     my ( $self, $req ) = @_;
 
