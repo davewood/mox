@@ -15,14 +15,14 @@ has model => (
     },
 );
 
-has cache_dir     => ( is => 'ro', isa => 'Str', required => 1 );
-has template_root => ( is => 'ro', isa => 'Str', required => 1 );
-has view          => (
+has cache_dir    => ( is => 'ro', isa => 'Str', required => 1 );
+has template_dir => ( is => 'ro', isa => 'Str', required => 1 );
+has view         => (
     is           => 'ro',
     isa          => 'Text::Xslate',
     dependencies => {
         cache_dir => 'cache_dir',
-        path      => 'template_root',
+        path      => 'template_dir',
     },
 );
 
@@ -37,13 +37,15 @@ has rest_controller => (
     dependencies => [qw/ model /],
 );
 
+has static_dir => ( is => 'ro', isa => 'Str', required => 1 );
 router as {
     #    wrap 'Plack::Middleware::Session' => ( store => literal('File') );
-    route '/'      => 'root_controller.index';
-    route '/rest'  => 'REST.rest_controller.index';
-    #    route '/logout' => 'auth_controller.logout';
-    #    route '/admin'  => 'admin_controller.index';
-    #    route '/denied' => 'root_controller.deny';
+    route '/'                        => 'root_controller.index';
+    route '/rest'                    => 'REST.rest_controller.index';
+    wrap 'Plack::Middleware::Static' => (
+        root => 'static_dir',
+        path => literal(qr{^/(?:images|js|css)/}),
+    );
 };
 
 __PACKAGE__->meta->make_immutable;

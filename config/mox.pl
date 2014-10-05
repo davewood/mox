@@ -9,6 +9,7 @@ return {
         dsn            => "dbi:SQLite:dbname=$root/mox.db",
         sqlite_unicode => 1,
     },
-    template_root => "$root/templates",
-    cache_dir     => "$root/templates_cache",
+    template_dir => "$root/templates",
+    cache_dir    => "$root/templates_cache",
+    static_dir   => "$root/static",
 };
