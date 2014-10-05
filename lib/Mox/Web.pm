@@ -42,6 +42,7 @@ router as {
     #    wrap 'Plack::Middleware::Session' => ( store => literal('File') );
     route '/'                        => 'root_controller.index';
     route '/rest'                    => 'REST.rest_controller.index';
+    route '/rest/users'              => 'REST.rest_controller.users';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
         path => literal(qr{^/(?:images|js|css)/}),
