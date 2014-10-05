@@ -3,11 +3,10 @@ use OX;
 use Mox::Schema;
 
 has connect_info => ( is => 'ro', isa => 'HashRef', required => 1 );
-
 has model => (
     is           => 'ro',
     isa          => 'Mox::Schema',
-    dependencies => ['connect_info'],
+    dependencies => [qw/ connect_info /],
     lifecycle    => 'Singleton',
     block        => sub {
         my $connect_info = shift->param('connect_info');
@@ -15,22 +14,21 @@ has model => (
     },
 );
 
-#has cache_dir     => ( is => 'ro', isa => 'Str', required => 1 );
-#has template_root => ( is => 'ro', isa => 'Str', required => 1 );
-
-#has view          => (
-#    is           => 'ro',
-#    isa          => 'Text::Xslate',
-#    dependencies => {
-#        cache_dir => 'cache_dir',
-#        path      => 'template_root',
-#    },
-#);
+has cache_dir     => ( is => 'ro', isa => 'Str', required => 1 );
+has template_root => ( is => 'ro', isa => 'Str', required => 1 );
+has view          => (
+    is           => 'ro',
+    isa          => 'Text::Xslate',
+    dependencies => {
+        cache_dir => 'cache_dir',
+        path      => 'template_root',
+    },
+);
 
 has root_controller => (
     is           => 'ro',
     isa          => 'Mox::Web::Controller::Root',
-    dependencies => ['model'],
+    dependencies => [qw/ model view /],
 );
 
 router as {
