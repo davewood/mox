@@ -1,8 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-  </head>
-  <body>
-    Username: <: $username :>
-  </body>
+<!doctype html>
+<html lang="en" ng-app="moxApp">
+<head>
+  <meta charset="utf-8">
+  <title>Mox</title>
+  <script src="/js/angular.min.js"></script>
+  <script src="/js/controller.js"></script>
+</head>
+<body ng-controller="UserListCtrl">
+
+  <ul>
+    <li ng-repeat="user in users">
+      {{user.username}}
+    </li>
+  </ul>
+
+</body>
 </html>
