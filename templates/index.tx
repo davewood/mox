@@ -7,7 +7,7 @@
   <script src="/js/controller.js"></script>
 </head>
 <body ng-controller="UserListCtrl">
-
+  <p>Hello <: $username :>, let me load a list of all users for you.</p>
   <ul>
     <li ng-repeat="user in users">
       {{user.username}}
