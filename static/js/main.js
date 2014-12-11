@@ -12,12 +12,14 @@ $(document).ready(function(){
 
         // Operations
         self.loadUsers = function() {
-            $.get(
+            $.getJSON(
                     "/rest/users",
                     function( data ) {
-                        for (var i = 0; i < data.length; i++) {
-                            self.users.push(new User(data[i].username));
-                        }
+                        var mappedUsers = $.map(
+                                                data,
+                                                function(item) { return new User(item.username); }
+                                            );
+                        self.users(mappedUsers);
                     }
                 );
         }
