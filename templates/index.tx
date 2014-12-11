@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="en" ng-app="moxApp">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Mox</title>
-  <script src="/js/angular.min.js"></script>
-  <script src="/js/controller.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/knockout.min.js"></script>
+  <script src="/js/main.js"></script>
 </head>
-<body ng-controller="UserListCtrl">
+<body>
 
-  <ul>
-    <li ng-repeat="user in users">
-      {{user.username}}
-    </li>
+  <ul data-bind="foreach: users">
+    <li data-bind="text: username"></li>
   </ul>
+  <!--
+  <button data-bind="click: loadUsers">load</button>
+  -->
 
 </body>
 </html>
