@@ -31,7 +31,7 @@ sub root_PUT {
         $error = [
             422,
             [ 'Content-type' => 'text/plain' ],
-            [ $e ]
+            [ "$e" ]
         ];
     };
     return $error if $error;
@@ -58,7 +58,7 @@ sub item_POST {
         $error = [
             422,
             [ 'Content-type' => 'text/plain' ],
-            [ $e ]
+            [ "$e" ]
         ];
     };
     return $error if $error;
@@ -83,7 +83,7 @@ sub item_DELETE {
         $error = [
             400,
             [ 'Content-type' => 'text/plain' ],
-            [ $e ]
+            [ "$e" ]
         ];
     };
     return $error if $error;
