@@ -1,8 +1,23 @@
 $(document).ready(function(){
 
-    function User(initialName) {
-        var self = this;
-        self.username = ko.observable(initialName);
+    function User(initialUsrId, initialName) {
+        var self       = this;
+        self.usr_id    = initialUsrId,
+        self.username  = ko.observable(initialName);
+        self.dirty     = ko.observable(false);
+        self.markDirty = function() { self.dirty(true); };
+        self.unmarkDirty = function() { self.dirty(false); self.error(''); };
+        self.error     = ko.observable("");
+        self.save      = function() {
+            $.ajax({
+                url: '/rest/users/' + self.usr_id,
+                type: 'POST',
+                data: { username: self.username },
+                success: function(data) { self.unmarkDirty(); },
+                error: function(xhr) { self.error(xhr.responseText) },
+                dataType: 'json'
+            });
+        };
     }
 
     function UsersViewModel() {
@@ -14,11 +29,11 @@ $(document).ready(function(){
         self.loadUsers = function() {
             $.getJSON(
                     "/rest/users",
-                    function( data ) {
+                    function(data) {
                         var mappedUsers = $.map(
-                                                data,
-                                                function(item) { return new User(item.username); }
-                                            );
+                            data,
+                            function(item) { return new User(item.usr_id, item.username); }
+                        );
                         self.users(mappedUsers);
                     }
                 );
@@ -27,5 +42,4 @@ $(document).ready(function(){
     }
 
     ko.applyBindings(new UsersViewModel());
-
 });

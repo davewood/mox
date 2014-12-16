@@ -9,12 +9,24 @@
 </head>
 <body>
 
-  <ul data-bind="foreach: users">
-    <li data-bind="text: username"></li>
-  </ul>
-  <!--
-  <button data-bind="click: loadUsers">load</button>
-  -->
+  <table>
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Username</th>
+        <th>Save</th>
+        <th>Error</th>
+      </tr>
+    </thead>
+    <tbody data-bind="foreach: users">
+      <tr>
+          <td data-bind="text: usr_id"></td>
+          <td><input data-bind="value: username, event: { change: markDirty }" /></td>
+          <td><button data-bind="enable: dirty, click: save">save</button></td>
+          <td data-bind="text: error, visible: error"></td>
+      </tr>
+    </tbody>
+  </table>
 
 </body>
 </html>
