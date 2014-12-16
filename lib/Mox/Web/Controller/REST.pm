@@ -20,11 +20,11 @@ sub root_GET {
 sub root_PUT {
     my ( $self, $req ) = @_;
 
-    my $user_rs = $self->model->resultset('User');
-    my $p;
-    my $error;
+    my ($p, $error, $user);
     try {
+        my $user_rs = $self->model->resultset('User');
         $p = $user_rs->validate_create( $req->parameters );
+        $user = $user_rs->create($p);
     }
     catch {
         my $e = shift;
@@ -35,8 +35,6 @@ sub root_PUT {
         ];
     };
     return $error if $error;
-
-    my $user = $user_rs->create($p);
 
     return [
         200,
@@ -49,10 +47,11 @@ sub item_POST {
     my ( $self, $req, $id ) = @_;
 
     my $user_rs = $self->model->resultset('User');
-    my $p;
-    my $error;
+    my ($p, $error, $user);
     try {
         $p = $user_rs->validate_update( $req->parameters );
+        $user = $user_rs->find($id);
+        $user->update($p);
     }
     catch {
         my $e = shift;
@@ -64,13 +63,35 @@ sub item_POST {
     };
     return $error if $error;
 
-    my $user = $user_rs->find($id);
-    $user->update($p);
-
     return [
         200,
         [ 'Content-type' => 'application/json' ],
         [ to_json( { $user->get_columns } ) ]
+    ];
+}
+
+sub item_DELETE {
+    my ( $self, $req, $id ) = @_;
+
+    my $error;
+    try {
+        my $user = $self->model->resultset('User')->find($id);
+        $user->delete;
+    }
+    catch {
+        my $e = shift;
+        $error = [
+            400,
+            [ 'Content-type' => 'text/plain' ],
+            [ $e ]
+        ];
+    };
+    return $error if $error;
+
+    return [
+        204,
+        [ 'Content-type' => 'application/json' ],
+        []
     ];
 }
 

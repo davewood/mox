@@ -15,6 +15,7 @@
         <th>User ID</th>
         <th>Username</th>
         <th>Save</th>
+        <th>Delete</th>
         <th>Error</th>
       </tr>
     </thead>
@@ -23,6 +24,7 @@
           <td data-bind="text: usr_id"></td>
           <td><input data-bind="value: username, valueUpdate: 'afterkeydown'" /></td>
           <td><button data-bind="enable: dirty, click: save">save</button></td>
+          <td><button data-bind="click: $root.removeUser">remove</button></td>
           <td data-bind="text: error, visible: error"></td>
       </tr>
     </tbody>
@@ -30,6 +32,7 @@
 
   <input data-bind="value: newUserName, valueUpdate: 'afterkeydown'" placeholder="enter a name" /></td>
   <button data-bind="click: create, enable: newUserName().length >= 5">create</button>
+  <span data-bind="text: newUserError, visible: newUserError"></span>
 
 </body>
 </html>
