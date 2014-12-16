@@ -16,6 +16,35 @@ sub root_GET {
         [ to_json(\@users) ]
     ];
 }
+
+sub root_PUT {
+    my ( $self, $req ) = @_;
+
+    my $user_rs = $self->model->resultset('User');
+    my $p;
+    my $error;
+    try {
+        $p = $user_rs->validate_create( $req->parameters );
+    }
+    catch {
+        my $e = shift;
+        $error = [
+            422,
+            [ 'Content-type' => 'text/plain' ],
+            [ $e ]
+        ];
+    };
+    return $error if $error;
+
+    my $user = $user_rs->create($p);
+
+    return [
+        200,
+        [ 'Content-type' => 'application/json' ],
+        [ to_json( { $user->get_columns } ) ]
+    ];
+}
+
 sub item_POST {
     my ( $self, $req, $id ) = @_;
 

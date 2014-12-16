@@ -5,15 +5,14 @@ $(document).ready(function(){
         self.usr_id    = initialUsrId,
         self.username  = ko.observable(initialName);
         self.dirty     = ko.observable(false);
-        self.markDirty = function() { self.dirty(true); };
-        self.unmarkDirty = function() { self.dirty(false); self.error(''); };
         self.error     = ko.observable("");
+        self.username.subscribe(function(newName) { self.dirty(true) });
         self.save      = function() {
             $.ajax({
                 url: '/rest/users/' + self.usr_id,
                 type: 'POST',
                 data: { username: self.username },
-                success: function(data) { self.unmarkDirty(); },
+                success: function(data) { self.dirty(false); self.error('') },
                 error: function(xhr) { self.error(xhr.responseText) },
                 dataType: 'json'
             });
@@ -24,6 +23,7 @@ $(document).ready(function(){
         var self = this;
 
         self.users = ko.observableArray([]);
+        self.newUserName = ko.observable("");
 
         // Operations
         self.loadUsers = function() {
@@ -37,7 +37,18 @@ $(document).ready(function(){
                         self.users(mappedUsers);
                     }
                 );
-        }
+        };
+        self.create = function() {
+            $.ajax({
+                url: '/rest/users',
+                type: 'PUT',
+                data: { username: self.newUserName },
+                success: function(data) { self.users.push( new User(data.usr_id, data.username) ) },
+                error: function(xhr) { self.newUserError(xhr.responseText) },
+                dataType: 'json'
+            });
+        };
+
         self.loadUsers();
     }
 

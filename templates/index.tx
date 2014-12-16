@@ -21,12 +21,15 @@
     <tbody data-bind="foreach: users">
       <tr>
           <td data-bind="text: usr_id"></td>
-          <td><input data-bind="value: username, event: { change: markDirty }" /></td>
+          <td><input data-bind="value: username, valueUpdate: 'afterkeydown'" /></td>
           <td><button data-bind="enable: dirty, click: save">save</button></td>
           <td data-bind="text: error, visible: error"></td>
       </tr>
     </tbody>
   </table>
+
+  <input data-bind="value: newUserName, valueUpdate: 'afterkeydown'" placeholder="enter a name" /></td>
+  <button data-bind="click: create, enable: newUserName().length >= 5">create</button>
 
 </body>
 </html>
