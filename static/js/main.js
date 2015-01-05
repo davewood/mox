@@ -14,7 +14,6 @@ $(document).ready(function(){
                 data: { username: self.username },
                 success: function(data) { self.dirty(false); self.error('') },
                 error: function(xhr) { self.error(xhr.responseText) },
-                dataType: 'json'
             });
         };
     }
@@ -28,16 +27,17 @@ $(document).ready(function(){
 
         // Operations
         self.loadUsers = function() {
-            $.getJSON(
-                    "/rest/users",
-                    function(data) {
-                        var mappedUsers = $.map(
-                            data,
-                            function(item) { return new User(item.usr_id, item.username); }
-                        );
-                        self.users(mappedUsers);
-                    }
-                );
+            $.ajax({
+                url: '/rest/users',
+                type: 'GET',
+                success: function(data) {
+                            var mappedUsers = $.map(
+                                data,
+                                function(item) { return new User(item.usr_id, item.username); }
+                            );
+                            self.users(mappedUsers);
+                         }
+            });
         };
         self.create = function() {
             $.ajax({
@@ -48,8 +48,7 @@ $(document).ready(function(){
                             self.users.push( new User(data.usr_id, data.username) );
                             self.newUserError("")
                          },
-                error: function(xhr) { self.newUserError(xhr.responseText) },
-                dataType: 'json'
+                error: function(xhr) { self.newUserError(xhr.responseText) }
             });
         };
         self.removeUser = function() {
@@ -58,8 +57,7 @@ $(document).ready(function(){
                 type: 'DELETE',
                 context: this,
                 success: function(data) { self.users.remove(this); },
-                error: function(xhr) { this.error(xhr.responseText) },
-                dataType: 'json'
+                error: function(xhr) { this.error(xhr.responseText) }
             });
         };
 
