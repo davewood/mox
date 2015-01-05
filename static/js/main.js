@@ -1,68 +1,68 @@
 $(document).ready(function(){
 
-    function User(initialUsrId, initialName) {
-        var self       = this;
-        self.usr_id    = initialUsrId,
-        self.username  = ko.observable(initialName);
-        self.dirty     = ko.observable(false);
-        self.error     = ko.observable("");
-        self.username.subscribe(function(newName) { self.dirty(true) });
+    function Playlist(initialId, initialName) {
+        var self         = this;
+        self.playlist_id = initialId,
+        self.name        = ko.observable(initialName);
+        self.dirty       = ko.observable(false);
+        self.error       = ko.observable("");
+        self.name.subscribe(function(newName) { self.dirty(true) });
         self.save = function() {
             $.ajax({
-                url: '/rest/users/' + self.usr_id,
+                url: '/rest/playlists/' + self.playlist_id,
                 type: 'POST',
-                data: { username: self.username },
+                data: { name: self.name },
                 success: function(data) { self.dirty(false); self.error('') },
                 error: function(xhr) { self.error(xhr.responseText) },
             });
         };
     }
 
-    function UsersViewModel() {
+    function PlaylistsViewModel() {
         var self = this;
 
-        self.users        = ko.observableArray([]);
-        self.newUserName  = ko.observable("");
-        self.newUserError = ko.observable("");
+        self.playlists = ko.observableArray([]);
+        self.newName   = ko.observable("");
+        self.newError  = ko.observable("");
 
         // Operations
-        self.loadUsers = function() {
+        self.loadPlaylists = function() {
             $.ajax({
-                url: '/rest/users',
+                url: '/rest/playlists',
                 type: 'GET',
                 success: function(data) {
-                            var mappedUsers = $.map(
+                            var mappedPlaylists = $.map(
                                 data,
-                                function(item) { return new User(item.usr_id, item.username); }
+                                function(item) { return new Playlist(item.playlist_id, item.name); }
                             );
-                            self.users(mappedUsers);
+                            self.playlists(mappedPlaylists);
                          }
             });
         };
         self.create = function() {
             $.ajax({
-                url: '/rest/users',
+                url: '/rest/playlists',
                 type: 'PUT',
-                data: { username: self.newUserName },
+                data: { name: self.newName },
                 success: function(data) {
-                            self.users.push( new User(data.usr_id, data.username) );
-                            self.newUserError("")
+                            self.playlists.push( new Playlist(data.playlist_id, data.name) );
+                            self.newError("")
                          },
-                error: function(xhr) { self.newUserError(xhr.responseText) }
+                error: function(xhr) { self.newError(xhr.responseText) }
             });
         };
-        self.removeUser = function() {
+        self.removePlaylist = function() {
             $.ajax({
-                url: '/rest/users/' + this.usr_id,
+                url: '/rest/playlists/' + this.playlist_id,
                 type: 'DELETE',
                 context: this,
-                success: function(data) { self.users.remove(this); },
+                success: function(data) { self.playlists.remove(this); },
                 error: function(xhr) { this.error(xhr.responseText) }
             });
         };
 
-        self.loadUsers();
+        self.loadPlaylists();
     }
 
-    ko.applyBindings(new UsersViewModel());
+    ko.applyBindings(new PlaylistsViewModel());
 });

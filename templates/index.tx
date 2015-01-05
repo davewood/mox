@@ -12,27 +12,27 @@
   <table>
     <thead>
       <tr>
-        <th>User ID</th>
-        <th>Username</th>
+        <th>Playlist ID</th>
+        <th>Name</th>
         <th>Save</th>
         <th>Delete</th>
         <th>Error</th>
       </tr>
     </thead>
-    <tbody data-bind="foreach: users">
+    <tbody data-bind="foreach: playlists">
       <tr>
-          <td data-bind="text: usr_id"></td>
-          <td><input data-bind="value: username, valueUpdate: 'afterkeydown'" /></td>
+          <td data-bind="text: playlist_id"></td>
+          <td><input data-bind="value: name, valueUpdate: 'afterkeydown'" /></td>
           <td><button data-bind="enable: dirty, click: save">save</button></td>
-          <td><button data-bind="click: $root.removeUser">remove</button></td>
+          <td><button data-bind="click: $root.removePlaylist">remove</button></td>
           <td data-bind="text: error, visible: error"></td>
       </tr>
     </tbody>
   </table>
 
-  <input data-bind="value: newUserName, valueUpdate: 'afterkeydown'" placeholder="enter a name" /></td>
-  <button data-bind="click: create, enable: newUserName().length >= 5">create</button>
-  <span data-bind="text: newUserError, visible: newUserError"></span>
+  <input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="enter a name" /></td>
+  <button data-bind="click: create, enable: newName().length >= 3">create</button>
+  <span data-bind="text: newError, visible: newError"></span>
 
 </body>
 </html>

@@ -31,17 +31,17 @@ has root_controller => (
     isa          => 'Mox::Web::Controller::Root',
     dependencies => [qw/ model view /],
 );
-has rest_controller => (
+has rest_playlist_controller => (
     is           => 'ro',
-    isa          => 'Mox::Web::Controller::REST',
+    isa          => 'Mox::Web::Controller::REST::Playlist',
     dependencies => [qw/ model /],
 );
 
 has static_dir => ( is => 'ro', isa => 'Str', required => 1 );
 router as {
     route '/'                        => 'root_controller.index';
-    route '/rest/users'              => 'REST.rest_controller.root';
-    route '/rest/users/:id'          => 'REST.rest_controller.item';
+    route '/rest/playlists'          => 'REST.rest_playlist_controller.root';
+    route '/rest/playlists/:id'      => 'REST.rest_playlist_controller.item';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
         path => literal(qr{^/(?:images|js|css)/}),
