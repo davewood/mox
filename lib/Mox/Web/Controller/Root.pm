@@ -1,6 +1,6 @@
 package Mox::Web::Controller::Root;
 use Moose;
-extends 'Mox::Web::Controller';
+extends 'Mox::Web::Controller::Base';
 
 has view => (
     is       => 'ro',
