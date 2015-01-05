@@ -31,5 +31,6 @@ __PACKAGE__->add_column(
 
 __PACKAGE__->set_primary_key(qw/ usr_id /);
 __PACKAGE__->add_unique_constraint( [qw/ username /] );
+__PACKAGE__->resultset_class('Mox::Schema::ResultSet::User');
 
 1;

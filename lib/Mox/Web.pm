@@ -39,10 +39,9 @@ has rest_controller => (
 
 has static_dir => ( is => 'ro', isa => 'Str', required => 1 );
 router as {
-    #    wrap 'Plack::Middleware::Session' => ( store => literal('File') );
     route '/'                        => 'root_controller.index';
-    route '/rest'                    => 'REST.rest_controller.index';
-    route '/rest/users'              => 'REST.rest_controller.users';
+    route '/rest/users'              => 'REST.rest_controller.root';
+    route '/rest/users/:id'          => 'REST.rest_controller.item';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
         path => literal(qr{^/(?:images|js|css)/}),

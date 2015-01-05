@@ -11,15 +11,8 @@ has view => (
 
 sub index {
     my ( $self, $req ) = @_;
-
-    my $username = $self->model->resultset('User')->first->username;
     return $req->new_response(
-        content => $self->render(
-            'index.tx',
-            {
-                username => $username,
-            }
-        ),
+        content => $self->render('index.tx'),
         status => '200',
     );
 }
