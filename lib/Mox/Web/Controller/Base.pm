@@ -1,4 +1,4 @@
-package Mox::Web::Controller;
+package Mox::Web::Controller::Base;
 use Moose;
 
 has model => (
