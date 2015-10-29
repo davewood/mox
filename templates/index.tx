@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <title>Mox</title>
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/knockout.min.js"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/knockout.js"></script>
   <script src="/js/main.js"></script>
 </head>
 <body>
