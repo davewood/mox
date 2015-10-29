@@ -1,14 +1,14 @@
-package Mox::Schema::Result::Playlist;
+package Mox::Schema::Result::Song;
 use parent qw/ DBIx::Class::Core /;
 
 use strict;
 use warnings;
 
 __PACKAGE__->load_components(qw/ Core /);
-__PACKAGE__->table('playlist');
+__PACKAGE__->table('song');
 
 __PACKAGE__->add_column(
-    playlist_id => {
+    song_id => {
         data_type   => 'integer',
         is_nullable => 0
     },
@@ -18,20 +18,20 @@ __PACKAGE__->add_column(
     },
 );
 
-__PACKAGE__->set_primary_key(qw/ playlist_id /);
+__PACKAGE__->set_primary_key(qw/ song_id /);
 __PACKAGE__->add_unique_constraint( [qw/ name /] );
-__PACKAGE__->resultset_class('Mox::Schema::ResultSet::Playlist');
+__PACKAGE__->resultset_class('Mox::Schema::ResultSet::Song');
 
 __PACKAGE__->has_many(
     'playlist_songs',
     'Mox::Schema::Result::PlaylistSong',
-    'playlist_id',
+    'song_id',
 );
 
 __PACKAGE__->many_to_many(
-    'songs',
+    'playlists',
     'playlist_songs',
-    'song',
+    'playlist',
 );
 
 1;
