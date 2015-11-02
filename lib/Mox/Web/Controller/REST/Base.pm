@@ -37,10 +37,10 @@ sub root_GET {
 sub root_PUT {
     my ( $self, $req ) = @_;
 
-    my ($p, $error, $item);
+    my ($error, $item);
     try {
         my $item_rs = $self->resultset;
-        $p = $item_rs->validate_create( $req->parameters );
+        my $p = $item_rs->validate_create( $req->parameters );
         $item = $item_rs->create($p);
     }
     catch {
@@ -64,9 +64,9 @@ sub item_POST {
     my ( $self, $req, $id ) = @_;
 
     my $item_rs = $self->resultset;
-    my ($p, $error, $item);
+    my ($error, $item);
     try {
-        $p = $item_rs->validate_update( $req->parameters );
+        my $p = $item_rs->validate_update( $req->parameters );
         $item = $item_rs->find($id);
         $item->update($p);
     }
