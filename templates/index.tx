@@ -1,38 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mox</title>
   <script src="/js/jquery.js"></script>
   <script src="/js/knockout.js"></script>
+  <script src="/js/notify.js"></script>
   <script src="/js/main.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 </head>
 <body>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Playlist ID</th>
-        <th>Name</th>
-        <th>Save</th>
-        <th>Delete</th>
-        <th>Error</th>
-      </tr>
-    </thead>
-    <tbody data-bind="foreach: playlists">
-      <tr>
-          <td data-bind="text: playlist_id"></td>
-          <td><input data-bind="value: name, valueUpdate: 'afterkeydown'" /></td>
-          <td><button data-bind="enable: dirty, click: save">save</button></td>
-          <td><button data-bind="click: $root.removePlaylist">remove</button></td>
-          <td data-bind="text: error, visible: error"></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="enter a name" /></td>
-  <button data-bind="click: create, enable: newName().length >= 3">create</button>
-  <span data-bind="text: newError, visible: newError"></span>
-
+  <div class="container">
+    <mox-playlists></mox-playlists>
+    <mox-songs></mox-songs>
+  </div>
 </body>
 </html>
