@@ -36,6 +36,11 @@ has rest_playlist_controller => (
     isa          => 'Mox::Web::Controller::REST::Playlist',
     dependencies => [qw/ model /],
 );
+has rest_playlist_song_controller => (
+    is           => 'ro',
+    isa          => 'Mox::Web::Controller::REST::PlaylistSong',
+    dependencies => [qw/ model /],
+);
 has rest_song_controller => (
     is           => 'ro',
     isa          => 'Mox::Web::Controller::REST::Song',
@@ -44,11 +49,14 @@ has rest_song_controller => (
 
 has static_dir => ( is => 'ro', isa => 'Str', required => 1 );
 router as {
-    route '/'                        => 'root_controller.index';
-    route '/rest/playlists'          => 'REST.rest_playlist_controller.root';
-    route '/rest/playlists/:id'      => 'REST.rest_playlist_controller.item';
-    route '/rest/songs'              => 'REST.rest_song_controller.root';
-    route '/rest/songs/:id'          => 'REST.rest_song_controller.item';
+    wrap 'Plack::Middleware::DebugLogging';
+    route '/'                         => 'root_controller.index';
+    route '/rest/playlists'           => 'REST.rest_playlist_controller.root';
+    route '/rest/playlists/:id'       => 'REST.rest_playlist_controller.item';
+    route '/rest/playlist_songs'      => 'REST.rest_playlist_song_controller.root';
+    route '/rest/playlist_songs/:id'  => 'REST.rest_playlist_song_controller.item';
+    route '/rest/songs'               => 'REST.rest_song_controller.root';
+    route '/rest/songs/:id'           => 'REST.rest_song_controller.item';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
         path => literal(qr{^/(?:images|js|css)/}),

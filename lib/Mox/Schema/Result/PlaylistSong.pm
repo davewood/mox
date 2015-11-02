@@ -6,7 +6,7 @@ use base 'DBIx::Class';
 __PACKAGE__->load_components(qw/ Core /);
 __PACKAGE__->table('playlist_song');
 __PACKAGE__->add_columns(
-    'id',
+    'playlist_song_id',
     {
         data_type => 'integer',
         is_auto_increment => 1,
@@ -26,7 +26,7 @@ __PACKAGE__->add_columns(
     },
 );
 
-__PACKAGE__->set_primary_key('id');
+__PACKAGE__->set_primary_key('playlist_song_id');
 __PACKAGE__->add_unique_constraint( [qw/playlist_id song_id/] );
 __PACKAGE__->resultset_class('Mox::Schema::ResultSet::PlaylistSong');
 
