@@ -2,7 +2,7 @@ $(document).ready(function(){
     "use strict";
 
     $( document ).ajaxError(function( event, xhr, settings, thrownError ) {
-        $.notify(xhr.responseText);
+        $.notify(xhr.responseText, "error");
     });
 
     function Song(initialId, initialName) {
