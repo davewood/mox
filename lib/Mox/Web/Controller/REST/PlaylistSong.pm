@@ -26,5 +26,31 @@ sub root_GET {
     ];
 }
 
+sub root_PUT {
+    my ( $self, $req ) = @_;
+
+    my ($error, $item);
+    try {
+        my $item_rs = $self->resultset;
+        my $p = $item_rs->validate_create( $req->parameters );
+        $item = $item_rs->create($p);
+    }
+    catch {
+        my $e = shift;
+        $error = [
+            422,
+            [ 'Content-type' => 'text/plain' ],
+            [ "$e" ]
+        ];
+    };
+    return $error if $error;
+
+    return [
+        200,
+        [ 'Content-type' => 'application/json' ],
+        [ to_json( { $item->get_columns, name => $item->song->name } ) ]
+    ];
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
