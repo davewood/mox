@@ -76,7 +76,9 @@ $(document).ready(function(){
              +   '</div>'
              + '<!-- /ko -->'
              + '<input data-bind="value: newName, valueUpdate: \'afterkeydown\'" placeholder="new song name" />'
-             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">'
+             +   '<span class="glyphicon glyphicon-plus"></span>'
+             + '</button>'
     });
 
     function PlaylistSong(initialId, initialName) {
@@ -132,11 +134,15 @@ $(document).ready(function(){
                '<!-- ko foreach: playlist_songs -->'
              +   '<div class="mox-playlist-song">'
              +     '<a data-bind="text: name"></a>'
-             +     '<button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylistSong">remove</button>'
+             +     '<button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylistSong">'
+             +       '<span class="glyphicon glyphicon-remove"></span>'
+             +     '</button>'
              +   '</div>'
              + '<!-- /ko -->'
              + '<input data-bind="value: newSongId, valueUpdate: \'afterkeydown\'" placeholder="new SongId" />'
-             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newSongId().length >= 1">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newSongId().length >= 1">'
+             +   '<span class="glyphicon glyphicon-plus"></span>'
+             + '</button>'
     });
 
     function Playlist(initialId, initialName) {
@@ -202,13 +208,19 @@ $(document).ready(function(){
                '<!-- ko foreach: playlists -->'
              +   '<div class="mox-playlist">'
              +     '<input data-bind="value: name, valueUpdate: \'afterkeydown\'" />'
-             +     '<button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">save</button>'
-             +     '<button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylist">remove</button>'
+             +     '<button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">'
+             +       '<span class="glyphicon glyphicon-save"></span>'
+             +     '</button>'
+             +     '<button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylist">'
+             +       '<span class="glyphicon glyphicon-remove"></span>'
+             +     '</button>'
              +     '<mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs>'
              +   '</div>'
              + '<!-- /ko -->'
              + '<input data-bind="value: newName, valueUpdate: \'afterkeydown\'" placeholder="new playlist name" />'
-             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">'
+             +   '<span class="glyphicon glyphicon-plus"></span>'
+             + '</button>'
     });
 
     function MoxViewModel() {}
