@@ -8,6 +8,7 @@ return {
     connect_info => {
         dsn            => "dbi:SQLite:dbname=$root/mox.db",
         sqlite_unicode => 1,
+        on_connect_call => 'use_foreign_keys',
     },
     template_dir => "$root/templates",
     cache_dir    => "$root/templates_cache",
