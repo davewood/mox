@@ -1,0 +1,6 @@
+.mox-playlist, .mox-song {
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid #abc;
+    border-radius: 5px;
+}
