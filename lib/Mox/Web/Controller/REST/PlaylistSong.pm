@@ -9,7 +9,14 @@ sub root_GET {
     my ( $self, $req ) = @_;
 
     my $playlist_id = $req->parameters->{playlist_id};
-    my $item_rs = $self->resultset->search( { playlist_id => $playlist_id } );
+    my $item_rs = $self->resultset->search(
+        { playlist_id => $playlist_id },
+        {
+            join      => 'song',
+            '+select' => ['song.name'],
+            '+as'     => ['name'],
+        }
+    );
     $item_rs->result_class('DBIx::Class::ResultClass::HashRefInflator');
     my @items = $item_rs->all;
     return [
