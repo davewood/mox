@@ -75,13 +75,17 @@ $(document).ready(function(){
              +   '<tbody data-bind="foreach: songs">'
              +     '<tr>'
              +         '<td><input data-bind="value: name, valueUpdate: \'afterkeydown\'" /></td>'
-             +         '<td><button class="btn btn-small" data-bind="enable: dirty, click: save">save</button></td>'
-             +         '<td><button class="btn btn-small" data-bind="click: $component.removeSong">remove</button></td>'
+             +         '<td><button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">'
+             +           '<span class="glyphicon glyphicon-save"></span>'
+             +         '</button></td>'
+             +         '<td><button class="btn btn-default btn-xs" data-bind="click: $component.removeSong">'
+             +           '<span class="glyphicon glyphicon-remove"></span>'
+             +         '</button></td>'
              +     '</tr>'
              +   '</tbody>'
              + '</table>'
              + '<input data-bind="value: newName, valueUpdate: \'afterkeydown\'" placeholder="new song name" /></td>'
-             + '<button class="btn btn-small" data-bind="click: create, enable: newName().length >= 3">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">create</button>'
     });
 
     function PlaylistSong(initialId, initialName) {
@@ -144,12 +148,12 @@ $(document).ready(function(){
              +   '<tbody data-bind="foreach: playlist_songs">'
              +     '<tr>'
              +         '<td><a data-bind="text: name"></a></td>'
-             +         '<td><button class="btn btn-small" data-bind="click: $component.removePlaylistSong">remove</button></td>'
+             +         '<td><button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylistSong">remove</button></td>'
              +     '</tr>'
              +   '</tbody>'
              + '</table>'
              + '<input data-bind="value: newSongId, valueUpdate: \'afterkeydown\'" placeholder="new SongId" /></td>'
-             + '<button class="btn btn-small" data-bind="click: create, enable: newSongId().length >= 1">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newSongId().length >= 1">create</button>'
     });
 
     function Playlist(initialId, initialName) {
@@ -223,14 +227,14 @@ $(document).ready(function(){
              +   '<tbody data-bind="foreach: playlists">'
              +     '<tr>'
              +         '<td><input data-bind="value: name, valueUpdate: \'afterkeydown\'" /></td>'
-             +         '<td><button class="btn btn-small" data-bind="enable: dirty, click: save">save</button></td>'
-             +         '<td><button class="btn btn-small" data-bind="click: $component.removePlaylist">remove</button></td>'
+             +         '<td><button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">save</button></td>'
+             +         '<td><button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylist">remove</button></td>'
              +         '<td><mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs></td>'
              +     '</tr>'
              +   '</tbody>'
              + '</table>'
              + '<input data-bind="value: newName, valueUpdate: \'afterkeydown\'" placeholder="new playlist name" /></td>'
-             + '<button class="btn btn-small" data-bind="click: create, enable: newName().length >= 3">create</button>'
+             + '<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">create</button>'
     });
 
     function MoxViewModel() {}
