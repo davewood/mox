@@ -1,0 +1,12 @@
+<!-- ko foreach: playlist_songs -->
+ <div class="mox-playlist-song">
+   <a data-bind="text: name"></a>
+   <button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylistSong">
+     <span class="glyphicon glyphicon-remove"></span>
+   </button>
+ </div>
+<!-- /ko -->
+<input data-bind="value: newSongId, valueUpdate: 'afterkeydown'" placeholder="new SongId" />
+<button class="btn btn-default btn-xs" data-bind="click: create, enable: newSongId().length >= 1">
+ <span class="glyphicon glyphicon-plus"></span>
+</button>
