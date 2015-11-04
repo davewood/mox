@@ -1,0 +1,24 @@
+{
+  "name": "mox",
+  "version": "0.0.1",
+  "description": "",
+  "main": "static/js/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davewood/mox.git"
+  },
+  "author": "David Schmidt <mail@davidschmidt.at>",
+  "license": "Artistic-2.0",
+  "bugs": {
+    "url": "https://github.com/davewood/mox/issues"
+  },
+  "homepage": "https://github.com/davewood/mox#readme",
+  "devDependencies": {
+    "bower": "^1.6.5",
+    "grunt": "^0.4.5",
+    "grunt-bower-requirejs": "^2.0.0"
+  }
+}

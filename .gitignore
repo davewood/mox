@@ -1,2 +1,4 @@
 mox.db
 templates_cache
+static/bower_components
+node_modules

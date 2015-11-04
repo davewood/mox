@@ -1,6 +1,20 @@
 requirejs.config({
-    baseUrl: 'js/lib',
-    paths: { 'app': '../app' },
+    paths: {
+        app: 'app',
+        Sortable: '../bower_components/Sortable/Sortable',
+        'knockout-sortable': '../bower_components/knockout-sortable/build/knockout-sortable.min',
+        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
+        jquery: '../bower_components/jquery/dist/jquery',
+        notify: '../bower_components/notify.js/notify',
+        text: '../bower_components/text/text',
+        knockout: '../bower_components/knockout/dist/knockout',
+    },
+    packages: [
+
+    ],
+    shim: {
+
+    }
 });
 
 require(['jquery', 'knockout', 'notify'], function( $, ko ) {

@@ -59,7 +59,7 @@ router as {
     route '/rest/songs/:id'           => 'REST.rest_song_controller.item';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
-        path => literal(qr{^/(?:images|js|css|fonts)/}),
+        path => literal(qr{^/(?:images|js|css|bower_components)/}),
     );
 };
 

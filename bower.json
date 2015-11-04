@@ -1,0 +1,28 @@
+{
+  "name": "mox",
+  "homepage": "https://github.com/davewood/mox",
+  "authors": [
+    "David Schmidt <mail@davidschmidt.at>"
+  ],
+  "description": "music player",
+  "main": "static/js/app.js",
+  "moduleType": [],
+  "license": "Artistic-2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.20",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "Sortable": "~1.4.2",
+    "knockout": "~3.3.0",
+    "text": "requirejs-text#~2.0.14",
+    "notify.js": "~1.2.8"
+  }
+}
