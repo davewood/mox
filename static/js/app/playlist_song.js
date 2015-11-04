@@ -1,9 +1,10 @@
 define(['jquery', 'knockout'], function ($, ko) {
 
-    function PlaylistSong(initialId, initialName) {
+    function PlaylistSong(_id, _name, _pos) {
         var self         = this;
-        self.playlist_song_id = initialId,
-        self.name        = ko.observable(initialName);
+        self.playlist_song_id = _id;
+        self.position    = _pos;
+        self.name        = ko.observable(_name);
     }
 
     function viewModel(params) {
@@ -21,7 +22,7 @@ define(['jquery', 'knockout'], function ($, ko) {
                 success: function(data) {
                             var mappedPlaylistSongs = $.map(
                                 data,
-                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name); }
+                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name, item.position); }
                             );
                             self.playlist_songs(mappedPlaylistSongs);
                          }
@@ -33,7 +34,7 @@ define(['jquery', 'knockout'], function ($, ko) {
                 type: 'PUT',
                 data: { playlist_id: self.playlist_id, song_id: self.newSongId },
                 success: function(data) {
-                            self.playlist_songs.push( new PlaylistSong(data.playlist_song_id, data.name) );
+                            self.playlist_songs.push( new PlaylistSong(data.playlist_song_id, data.name, data.position) );
                          },
             });
         };

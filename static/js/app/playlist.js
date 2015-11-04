@@ -1,9 +1,9 @@
 define(['jquery', 'knockout'], function ($, ko) {
 
-    function Playlist(initialId, initialName) {
+    function Playlist(_id, _name) {
         var self         = this;
-        self.playlist_id = initialId,
-        self.name        = ko.observable(initialName);
+        self.playlist_id = _id,
+        self.name        = ko.observable(_name);
         self.dirty       = ko.observable(false);
         self.name.subscribe(function(newName) { self.dirty(true) });
         self.save = function() {
