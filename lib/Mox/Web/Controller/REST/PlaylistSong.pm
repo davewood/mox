@@ -9,7 +9,7 @@ sub root_GET {
     my ( $self, $req ) = @_;
 
     my $playlist_id = $req->parameters->{playlist_id};
-    my $item_rs = $self->resultset->search(
+    my $item_rs = $self->resultset->default_order->search(
         { playlist_id => $playlist_id },
         {
             join      => 'song',

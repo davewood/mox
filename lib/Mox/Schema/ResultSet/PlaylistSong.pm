@@ -4,6 +4,16 @@ use strict;
 use warnings;
 use Params::Validate qw/ :all /;
 
+sub default_order {
+    my ( $self ) = @_;
+    my $alias = $self->current_source_alias;
+    return $self->search_rs(
+        undef,
+        { order_by => { -asc => [ "$alias.playlist_id", "$alias.position" ] } }
+    );
+    return $self;
+}
+
 my $validate_create =  {
     playlist_id => { type => SCALAR, regex => qr/^\d$/ },
     song_id     => { type => SCALAR, regex => qr/^\d$/ },
