@@ -23,6 +23,6 @@
     "Sortable": "~1.4.2",
     "knockout": "~3.3.0",
     "text": "requirejs-text#~2.0.14",
-    "notify.js": "~1.2.8"
+    "notifyjs": "~0.3.4"
   }
 }

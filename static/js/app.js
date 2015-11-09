@@ -5,9 +5,9 @@ requirejs.config({
         'knockout-sortable': '../bower_components/knockout-sortable/build/knockout-sortable.min',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
         jquery: '../bower_components/jquery/dist/jquery',
-        notify: '../bower_components/notify.js/notify',
         text: '../bower_components/text/text',
         knockout: '../bower_components/knockout/dist/knockout',
+        notifyjs: '../bower_components/notifyjs/dist/notify'
     },
     packages: [
 
@@ -17,7 +17,7 @@ requirejs.config({
     }
 });
 
-require(['jquery', 'knockout', 'notify'], function( $, ko ) {
+require(['jquery', 'knockout', 'notifyjs'], function( $, ko ) {
     "use strict";
 
     $(document).ready(function(){
