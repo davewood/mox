@@ -2,7 +2,6 @@ requirejs.config({
     paths: {
         app: 'app',
         Sortable: '../bower_components/Sortable/Sortable',
-        'knockout-sortable': '../bower_components/knockout-sortable/build/knockout-sortable.min',
         bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
         jquery: '../bower_components/jquery/dist/jquery',
         text: '../bower_components/text/text',
