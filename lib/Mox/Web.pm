@@ -48,8 +48,22 @@ has rest_song_controller => (
 );
 
 has static_dir => ( is => 'ro', isa => 'Str', required => 1 );
+
 router as {
     wrap 'Plack::Middleware::DebugLogging';
+    wrap 'Plack::Middleware::Header' => (
+        set => literal(
+            [
+                'Cache-Control' => 'no-cache, no-store, must-revalidate',
+                'Pragma'        => 'no-cache',
+                'Expires'       => 0,
+            ]
+        )
+    );
+    wrap 'Plack::Middleware::Static' => (
+        root => 'static_dir',
+        path => literal(qr{^/(?:images|js|css|bower_components)/}),
+    );
     route '/'                         => 'root_controller.index';
     route '/rest/playlists'           => 'REST.rest_playlist_controller.root';
     route '/rest/playlists/:id'       => 'REST.rest_playlist_controller.item';
@@ -57,10 +71,6 @@ router as {
     route '/rest/playlist_songs/:id'  => 'REST.rest_playlist_song_controller.item';
     route '/rest/songs'               => 'REST.rest_song_controller.root';
     route '/rest/songs/:id'           => 'REST.rest_song_controller.item';
-    wrap 'Plack::Middleware::Static' => (
-        root => 'static_dir',
-        path => literal(qr{^/(?:images|js|css|bower_components)/}),
-    );
 };
 
 __PACKAGE__->meta->make_immutable;
