@@ -1,14 +1,14 @@
 <!-- ko foreach: playlists -->
- <div class="mox-playlist">
-   <input data-bind="value: name, valueUpdate: 'afterkeydown'" />
-   <button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">
-     <span class="glyphicon glyphicon-save"></span>
-   </button>
-   <button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylist">
-     <span class="glyphicon glyphicon-remove"></span>
-   </button>
-   <mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs>
- </div>
+  <div class="mox-playlist">
+    <input data-bind="value: name, valueUpdate: 'afterkeydown'" />
+    <button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">
+      <span class="glyphicon glyphicon-save"></span>
+    </button>
+    <button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylist">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs>
+  </div>
 <!-- /ko -->
 <input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name" />
 <button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">

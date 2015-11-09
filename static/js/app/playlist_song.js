@@ -1,4 +1,4 @@
-define(['jquery', 'knockout'], function ($, ko) {
+define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
 
     function PlaylistSong(_id, _name, _pos) {
         var self         = this;
