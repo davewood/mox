@@ -1,7 +1,11 @@
-<div data-bind="sortable: {foreach: playlist_songs}">
+<div data-bind="sortable: {foreach: playlist_songs, options:{
+        onUpdate: function(evt){
+            $component.move(evt.oldIndex, evt.newIndex);
+        }
+}}">
   <div class="mox-playlist-song">
     <a data-bind="text: name"></a>
-    <button class="btn btn-default btn-xs" data-bind="click: $component.removePlaylistSong">
+    <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
       <span class="glyphicon glyphicon-remove"></span>
     </button>
   </div>

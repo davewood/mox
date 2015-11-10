@@ -52,5 +52,30 @@ sub root_PUT {
     ];
 }
 
+sub move_POST {
+    my ( $self, $req, $id ) = @_;
+
+    my ($error, $item);
+    try {
+        my $p = $self->resultset->validate_move( $req->parameters );
+        $item = $self->_get_item($id);
+        $item->move_to( $p->{new_pos} );
+    }
+    catch {
+        my $e = shift;
+        $error = [
+            400,
+            [ 'Content-type' => 'text/plain' ],
+            [ "$e" ]
+        ];
+    };
+    return $error if $error;
+
+    return [
+        200,
+        [ 'Content-type' => 'application/json' ],
+    ];
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

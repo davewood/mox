@@ -69,6 +69,7 @@ router as {
     route '/rest/playlists/:id'       => 'REST.rest_playlist_controller.item';
     route '/rest/playlist_songs'      => 'REST.rest_playlist_song_controller.root';
     route '/rest/playlist_songs/:id'  => 'REST.rest_playlist_song_controller.item';
+    route '/rest/playlist_songs/:id/move' => 'REST.rest_playlist_song_controller.move';
     route '/rest/songs'               => 'REST.rest_song_controller.root';
     route '/rest/songs/:id'           => 'REST.rest_song_controller.item';
 };

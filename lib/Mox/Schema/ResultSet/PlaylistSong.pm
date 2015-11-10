@@ -14,7 +14,7 @@ sub default_order {
     return $self;
 }
 
-my $validate_create =  {
+my $validate_create = {
     playlist_id => { type => SCALAR, regex => qr/^\d$/ },
     song_id     => { type => SCALAR, regex => qr/^\d$/ },
 };
@@ -36,6 +36,15 @@ sub validate_update {
     my %p = validate_with(
         params  => \@_,
         spec    => $validate_update,
+        on_fail => sub { die "$_[0]\n" },
+    );
+    return \%p;
+}
+sub validate_move {
+    my $self = shift;
+    my %p = validate_with(
+        params  => \@_,
+        spec    => { new_pos => { type => SCALAR, regex => qr/^\d$/ } },
         on_fail => sub { die "$_[0]\n" },
     );
     return \%p;

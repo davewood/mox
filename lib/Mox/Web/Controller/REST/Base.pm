@@ -20,6 +20,13 @@ sub _build_resultset {
     my ($self) = @_;
     return $self->model->resultset($self->resultset_name);
 }
+sub _get_item {
+    my ( $self, $id ) = @_;
+    my $item = $self->resultset->find($id);
+    die "Item not found! (" . $self->resultset_name . ": $id)"
+        unless $item;
+    return $item;
+}
 
 sub root_GET {
     my ( $self, $req ) = @_;
@@ -63,11 +70,10 @@ sub root_PUT {
 sub item_POST {
     my ( $self, $req, $id ) = @_;
 
-    my $item_rs = $self->resultset;
     my ($error, $item);
     try {
-        my $p = $item_rs->validate_update( $req->parameters );
-        $item = $item_rs->find($id);
+        my $p = $self->resultset->validate_update( $req->parameters );
+        $item = $self->_get_item($id);
         $item->update($p);
     }
     catch {
@@ -92,7 +98,7 @@ sub item_DELETE {
 
     my $error;
     try {
-        my $item = $self->resultset->find($id);
+        my $item = $self->_get_item($id);
         $item->delete;
     }
     catch {

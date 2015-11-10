@@ -14,7 +14,7 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
         self.playlist_songs = ko.observableArray([]);
         self.newSongId      = ko.observable("");
 
-        self.loadPlaylistSongs = function() {
+        self.load = function() {
             $.ajax({
                 url: '/rest/playlist_songs/',
                 type: 'GET',
@@ -38,7 +38,7 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                          },
             });
         };
-        self.removePlaylistSong = function() {
+        self.remove = function() {
             $.ajax({
                 url: '/rest/playlist_songs/' + this.playlist_song_id,
                 type: 'DELETE',
@@ -46,8 +46,17 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 success: function(data) { self.playlist_songs.remove(this); },
             });
         };
+        self.move = function(oldIndex, newIndex) {
+            var moved_item   = self.playlist_songs()[oldIndex];
+            var new_position = self.playlist_songs()[newIndex].position;
+            $.ajax({
+                url: '/rest/playlist_songs/' + moved_item.playlist_song_id + '/move',
+                type: 'POST',
+                data: { new_pos: new_position },
+            });
+        };
 
-        self.loadPlaylistSongs();
+        self.load();
     }
 
     return viewModel;
