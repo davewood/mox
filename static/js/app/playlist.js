@@ -23,7 +23,7 @@ define(['jquery', 'knockout'], function ($, ko) {
         self.newName   = ko.observable("");
 
         // Operations
-        self.loadPlaylists = function() {
+        self.load = function() {
             $.ajax({
                 url: '/rest/playlists',
                 type: 'GET',
@@ -47,7 +47,7 @@ define(['jquery', 'knockout'], function ($, ko) {
                          },
             });
         };
-        self.removePlaylist = function() {
+        self.remove = function() {
             $.ajax({
                 url: '/rest/playlists/' + this.playlist_id,
                 type: 'DELETE',
@@ -56,7 +56,7 @@ define(['jquery', 'knockout'], function ($, ko) {
             });
         };
 
-        self.loadPlaylists();
+        self.load();
     }
 
     return viewModel;
