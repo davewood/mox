@@ -10,8 +10,10 @@
 </head>
 <body>
   <div class="container">
-    <mox-playlists></mox-playlists>
-    <mox-songs></mox-songs>
+    <div class="row">
+      <mox-playlists class="col-md-6"></mox-playlists>
+      <mox-songs class="col-md-6"></mox-songs>
+    </div>
   </div>
 </body>
 </html>
