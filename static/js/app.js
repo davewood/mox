@@ -13,7 +13,7 @@ requirejs.config({
 
     ],
     shim: {
-
+        notifyjs: { deps: ['jquery' ] }
     }
 });
 

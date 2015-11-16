@@ -1,9 +1,8 @@
 define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
 
-    function PlaylistSong(_id, _name, _pos) {
+    function PlaylistSong(_id, _name) {
         var self         = this;
         self.playlist_song_id = _id;
-        self.position    = _pos;
         self.name        = ko.observable(_name);
     }
 
@@ -12,7 +11,6 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
 
         self.playlist_id    = params.playlist_id;
         self.playlist_songs = ko.observableArray([]);
-        self.newSongId      = ko.observable("");
 
         self.load = function() {
             $.ajax({
@@ -22,20 +20,23 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 success: function(data) {
                             var mappedPlaylistSongs = $.map(
                                 data,
-                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name, item.position); }
+                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name); }
                             );
                             self.playlist_songs(mappedPlaylistSongs);
                          }
             });
         };
-        self.create = function() {
+        self.create = function(newSong, new_index) {
             $.ajax({
                 url: '/rest/playlist_songs',
                 type: 'PUT',
-                data: { playlist_id: self.playlist_id, song_id: self.newSongId },
+                data: { playlist_id: self.playlist_id, song_id: newSong.song_id, position: new_index+1 },
                 success: function(data) {
-                            self.playlist_songs.push( new PlaylistSong(data.playlist_song_id, data.name, data.position) );
+                            newSong.playlist_song_id = data.playlist_song_id;
                          },
+                error: function() {
+                           self.playlist_songs.remove(newSong);
+                       }
             });
         };
         self.remove = function() {
@@ -46,13 +47,12 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 success: function(data) { self.playlist_songs.remove(this); },
             });
         };
-        self.move = function(oldIndex, newIndex) {
-            var moved_item   = self.playlist_songs()[oldIndex];
-            var new_position = self.playlist_songs()[newIndex].position;
+        self.move = function(old_index, new_index) {
+            var moved_item = self.playlist_songs()[old_index];
             $.ajax({
                 url: '/rest/playlist_songs/' + moved_item.playlist_song_id + '/move',
                 type: 'POST',
-                data: { new_pos: new_position },
+                data: { position: new_index+1 },
             });
         };
 

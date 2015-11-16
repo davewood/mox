@@ -44,7 +44,7 @@ sub validate_move {
     my $self = shift;
     my %p = validate_with(
         params  => \@_,
-        spec    => { new_pos => { type => SCALAR, regex => qr/^\d$/ } },
+        spec    => { position => { type => SCALAR, regex => qr/^\d$/ } },
         on_fail => sub { die "$_[0]\n" },
     );
     return \%p;

@@ -32,8 +32,14 @@ sub root_PUT {
     my ($error, $item);
     try {
         my $item_rs = $self->resultset;
-        my $p = $item_rs->validate_create( $req->parameters );
+        my $params = $req->parameters;
+        my $position = delete $params->{position};
+
+        my $p = $item_rs->validate_create( $params );
         $item = $item_rs->create($p);
+
+        $p = $self->resultset->validate_move( { position => $position } );
+        $item->move_to( $p->{position} );
     }
     catch {
         my $e = shift;
@@ -59,7 +65,7 @@ sub move_POST {
     try {
         my $p = $self->resultset->validate_move( $req->parameters );
         $item = $self->_get_item($id);
-        $item->move_to( $p->{new_pos} );
+        $item->move_to( $p->{position} );
     }
     catch {
         my $e = shift;

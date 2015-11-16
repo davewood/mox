@@ -1,3 +1,7 @@
+<input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name" />
+<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">
+ <span class="glyphicon glyphicon-plus"></span>
+</button>
 <!-- ko foreach: playlists -->
   <div class="mox-playlist">
     <input data-bind="value: name, valueUpdate: 'afterkeydown'" />
@@ -10,7 +14,3 @@
     <mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs>
   </div>
 <!-- /ko -->
-<input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name" />
-<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">
- <span class="glyphicon glyphicon-plus"></span>
-</button>
