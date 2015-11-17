@@ -1,10 +1,11 @@
-<input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name" />
-<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">
+<input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
+<input type="file" data-bind="fileInput: newFile">
+<button class="btn btn-default btn-xs" data-bind="click: create, enable: newSongReady">
   <span class="glyphicon glyphicon-plus"></span>
 </button>
 <div data-bind="draggable: {foreach: songs}">
   <div class="mox-song">
-    <input data-bind="value: name, valueUpdate: 'afterkeydown'" />
+    <input data-bind="value: name, valueUpdate: 'afterkeydown'">
     <button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">
       <span class="glyphicon glyphicon-save"></span>
     </button>

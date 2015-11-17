@@ -4,7 +4,7 @@ use parent qw/ DBIx::Class::Core /;
 use strict;
 use warnings;
 
-__PACKAGE__->load_components(qw/ Core /);
+__PACKAGE__->load_components(qw/ InflateColumn::FS Core /);
 __PACKAGE__->table('song');
 
 __PACKAGE__->add_column(
@@ -15,6 +15,11 @@ __PACKAGE__->add_column(
     name => {
         data_type   => 'varchar',
         is_nullable => 0,
+    },
+    file => {
+        data_type    => 'varchar',
+        is_fs_column => 1,
+        #fs_column_path => '/tmp', # we set this value in config
     },
 );
 

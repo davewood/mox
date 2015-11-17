@@ -5,6 +5,7 @@ use Dir::Self;
 my $root = __DIR__ . '/../';
 
 return {
+    fs_path => $root . 'static/files', # path where songs are stored
     connect_info => {
         dsn            => "dbi:SQLite:dbname=$root/mox.db",
         sqlite_unicode => 1,

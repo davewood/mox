@@ -7,13 +7,18 @@ requirejs.config({
         jquery: '../bower_components/jquery/dist/jquery',
         text: '../bower_components/text/text',
         knockout: '../bower_components/knockout/dist/knockout',
-        notifyjs: '../bower_components/notifyjs/dist/notify'
+        notifyjs: '../bower_components/notifyjs/dist/notify',
+        'knockout-file-bindings': '../bower_components/knockout-file-bindings/knockout-file-bindings'
     },
     packages: [
 
     ],
     shim: {
-        notifyjs: { deps: ['jquery' ] }
+        notifyjs: {
+            deps: [
+                'jquery'
+            ]
+        }
     }
 });
 

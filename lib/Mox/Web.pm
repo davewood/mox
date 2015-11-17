@@ -4,14 +4,19 @@ use OX::RouteBuilder::REST;
 use Mox::Schema;
 
 has connect_info => ( is => 'ro', isa => 'HashRef', required => 1 );
+has fs_path      => ( is => 'ro', isa => 'Str',     required => 1 );
 has model => (
     is           => 'ro',
     isa          => 'Mox::Schema',
-    dependencies => [qw/ connect_info /],
+    dependencies => [qw/ connect_info fs_path /],
     lifecycle    => 'Singleton',
     block        => sub {
-        my $connect_info = shift->param('connect_info');
-        Mox::Schema->connect($connect_info);
+        my $s = shift;
+        my $connect_info = $s->param('connect_info');
+        my $fs_path      = $s->param('fs_path');
+        my $schema       = Mox::Schema->connect($connect_info);
+        $schema->source('Song')->column_info('file')->{fs_column_path} = $fs_path;
+        return $schema;
     },
 );
 
@@ -62,7 +67,7 @@ router as {
     );
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
-        path => literal(qr{^/(?:images|js|css|bower_components)/}),
+        path => literal(qr{^/(?:files|js|css|bower_components)/}),
     );
     route '/'                         => 'root_controller.index';
     route '/rest/playlists'           => 'REST.rest_playlist_controller.root';
