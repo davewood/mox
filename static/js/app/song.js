@@ -1,19 +1,10 @@
 define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
 
-    function Song(initialId, initialName) {
-        var self         = this;
-        self.song_id     = initialId,
-        self.name        = ko.observable(initialName);
-        self.dirty       = ko.observable(false);
-        self.name.subscribe(function(newName) { self.dirty(true) });
-        self.save = function() {
-            $.ajax({
-                url: '/rest/songs/' + self.song_id,
-                type: 'POST',
-                data: { name: self.name },
-                success: function(data) { self.dirty(false); },
-            });
-        };
+    function Song(_id, _name, _file) {
+        var self     = this;
+        self.song_id = _id,
+        self.name    = ko.observable(_name);
+        self.file    = _file;
     }
 
     function viewModel(params) {
@@ -37,7 +28,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
                 success: function(data) {
                             var mappedSongs = $.map(
                                 data,
-                                function(item) { return new Song(item.song_id, item.name); }
+                                function(item) { return new Song(item.song_id, item.name, item.file); }
                             );
                             self.songs(mappedSongs);
                          }
@@ -49,7 +40,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
                 type: 'PUT',
                 data: { name: self.newName, file: self.newFile().base64String() },
                 success: function(data) {
-                            self.songs.push( new Song(data.song_id, data.name) );
+                            self.songs.push( new Song(data.song_id, data.name, data.file) );
                             self.clearNewSong();
                          },
             });
