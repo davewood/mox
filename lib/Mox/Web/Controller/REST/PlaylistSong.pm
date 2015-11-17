@@ -13,8 +13,8 @@ sub root_GET {
         { playlist_id => $playlist_id },
         {
             join      => 'song',
-            '+select' => ['song.name'],
-            '+as'     => ['name'],
+            '+select' => ['song.name', 'song.file'],
+            '+as'     => ['name', 'file'],
         }
     );
     $item_rs->result_class('DBIx::Class::ResultClass::HashRefInflator');
@@ -54,7 +54,7 @@ sub root_PUT {
     return [
         200,
         [ 'Content-type' => 'application/json' ],
-        [ to_json( { $item->get_columns, name => $item->song->name } ) ]
+        [ to_json( { $item->get_columns, name => $item->song->name, file => $item->song->file->stringify } ) ]
     ];
 }
 

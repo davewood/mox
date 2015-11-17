@@ -5,7 +5,7 @@
 </button>
 <div data-bind="draggable: {foreach: songs}">
   <div class="mox-song">
-    <a data-bind="attr: { href: 'files/' + file }, text: name"></a>
+    <span data-bind="text: name"></span>
     <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
       <span class="glyphicon glyphicon-remove"></span>
     </button>

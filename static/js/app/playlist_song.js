@@ -1,9 +1,10 @@
 define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
 
-    function PlaylistSong(_id, _name) {
-        var self         = this;
+    function PlaylistSong(_id, _name, _file) {
+        var self              = this;
         self.playlist_song_id = _id;
-        self.name        = ko.observable(_name);
+        self.name             = ko.observable(_name);
+        self.file             = _file;
     }
 
     function viewModel(params) {
@@ -20,7 +21,7 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 success: function(data) {
                             var mappedPlaylistSongs = $.map(
                                 data,
-                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name); }
+                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name, item.file); }
                             );
                             self.playlist_songs(mappedPlaylistSongs);
                          }
@@ -33,6 +34,7 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 data: { playlist_id: self.playlist_id, song_id: newSong.song_id, position: new_index+1 },
                 success: function(data) {
                             newSong.playlist_song_id = data.playlist_song_id;
+                            newSong.file = data.file;
                          },
                 error: function() {
                            self.playlist_songs.remove(newSong);

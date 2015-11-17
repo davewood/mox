@@ -8,7 +8,7 @@
         },
 }}">
   <div class="mox-playlist-song">
-    <a data-bind="text: name"></a>
+    <a data-bind="attr: { href: 'files/' + file }, text: name"></a>
     <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
       <span class="glyphicon glyphicon-remove"></span>
     </button>
