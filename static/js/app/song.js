@@ -1,9 +1,9 @@
-define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
+define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
 
     function Song(_id, _name, _file) {
         var self     = this;
         self.song_id = _id,
-        self.name    = ko.observable(_name);
+        self.name    = _name;
         self.file    = _file;
     }
 
@@ -13,6 +13,22 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
         self.songs   = ko.observableArray([]);
         self.newName = ko.observable("");
         self.newFile = ko.observable({ base64String: ko.observable() });
+        self.searchValue = ko.observable();
+        self.filteredSongs = ko.pureComputed(function() {
+            if(self.searchValue()) {
+                return ko.utils.arrayFilter(
+                        self.songs(),
+                        function(item) {
+                            if (item.name.toLowerCase().search(self.searchValue().toLowerCase()) !== -1) {
+                                return true;
+                            }
+                        }
+                    );
+            }
+            else {
+                return self.songs();
+            }
+        });
 
         self.newSongReady = ko.pureComputed(function() {
             return self.newName().length > 3 && self.newFile().file();

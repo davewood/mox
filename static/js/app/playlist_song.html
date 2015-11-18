@@ -1,16 +1,21 @@
-<div data-bind="sortable: {foreach: playlist_songs, options: {
-        group: { pull: false },
-        onUpdate: function(evt) {
-            $component.move(evt.oldIndex, evt.newIndex);
-        },
-        onAdd: function(evt, new_song) {
-            $component.create(new_song, evt.newIndex);
-        },
-}}">
-  <div class="mox-playlist-song">
-    <a data-bind="attr: { href: 'files/' + file }, text: name"></a>
-    <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
-      <span class="glyphicon glyphicon-remove"></span>
-    </button>
+<div class="mox-container" data-bind="visible: $root.active_playlist_id()">
+  <div id="sortable" data-bind="sortable: {foreach: playlist_songs, options: {
+          group: { pull: false },
+          onUpdate: function(evt) {
+              $component.move(evt.oldIndex, evt.newIndex);
+          },
+          onAdd: function(evt, new_song) {
+              $component.create(new_song, evt.newIndex);
+          },
+  }}">
+    <div class="mox-playlist-song">
+      <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+      <button class="btn btn-default btn-xs" data-bind="click: $component.play">
+        <span class="glyphicon glyphicon-play"></span>
+      </button>
+      <a data-bind="attr: { href: 'files/' + file }, text: name"></a>
+    </div>
   </div>
 </div>

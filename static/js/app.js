@@ -8,7 +8,8 @@ requirejs.config({
         text: '../bower_components/text/text',
         knockout: '../bower_components/knockout/dist/knockout',
         notifyjs: '../bower_components/notifyjs/dist/notify',
-        'knockout-file-bindings': '../bower_components/knockout-file-bindings/knockout-file-bindings'
+        'knockout-file-bindings': '../bower_components/knockout-file-bindings/knockout-file-bindings',
+        howler: '../bower_components/howler.js/howler'
     },
     packages: [
 
@@ -44,7 +45,11 @@ require(['jquery', 'knockout', 'notifyjs'], function( $, ko ) {
             template:  { require: 'text!app/playlist.html' }
         });
 
-        ko.applyBindings();
+        function AppViewModel() {
+            var self = this;
+            self.active_playlist_id = ko.observable();
+        }
+        ko.applyBindings(new AppViewModel());
     });
 
 });

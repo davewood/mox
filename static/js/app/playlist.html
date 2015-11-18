@@ -1,16 +1,32 @@
-<input data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name" />
-<button class="btn btn-default btn-xs" data-bind="click: create, enable: newName().length >= 3">
- <span class="glyphicon glyphicon-plus"></span>
-</button>
-<!-- ko foreach: playlists -->
-  <div class="mox-playlist">
-    <input data-bind="value: name, valueUpdate: 'afterkeydown'" />
-    <button class="btn btn-default btn-xs" data-bind="enable: dirty, click: save">
-      <span class="glyphicon glyphicon-save"></span>
-    </button>
-    <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
-      <span class="glyphicon glyphicon-remove"></span>
-    </button>
-    <mox-playlist-songs params="playlist_id: playlist_id"></mox-playlist-songs>
+<div class="mox-container" data-bind="foreach: playlists">
+  <div class="mox-playlist" data-bind="click: $component.selectPlaylist, css: {selected: selected}">
+      <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+      <span data-bind="text: name"></span>
+    </div>
   </div>
-<!-- /ko -->
+</div>
+
+<button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#newPlaylistModal">
+  <span class="glyphicon glyphicon-plus"></span>
+</button>
+
+<div class="modal fade" id="newPlaylistModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">new Playlist</h4>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal" data-bind="click: create, enable: newName().length >= 3">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

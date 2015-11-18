@@ -1,19 +1,10 @@
-define(['jquery', 'knockout'], function ($, ko) {
+define(['jquery', 'knockout', 'bootstrap', 'howler'], function ($, ko) {
 
     function Playlist(_id, _name) {
         var self         = this;
         self.playlist_id = _id,
         self.name        = ko.observable(_name);
-        self.dirty       = ko.observable(false);
-        self.name.subscribe(function(newName) { self.dirty(true) });
-        self.save = function() {
-            $.ajax({
-                url: '/rest/playlists/' + self.playlist_id,
-                type: 'POST',
-                data: { name: self.name },
-                success: function(data) { self.dirty(false); },
-            });
-        };
+        self.selected    = ko.observable(false);
     }
 
     function viewModel(params) {
@@ -22,7 +13,13 @@ define(['jquery', 'knockout'], function ($, ko) {
         self.playlists = ko.observableArray([]);
         self.newName   = ko.observable("");
 
-        // Operations
+        self.selectPlaylist = function(playlist) {
+            params.active_playlist_id(playlist.playlist_id);
+            ko.utils.arrayForEach(self.playlists(), function(item) {
+                item.selected(false);
+            });
+            playlist.selected(true);
+        };
         self.load = function() {
             $.ajax({
                 url: '/rest/playlists',

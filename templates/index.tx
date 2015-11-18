@@ -11,8 +11,9 @@
 <body>
   <div class="container">
     <div class="row">
-      <mox-playlists class="col-md-6"></mox-playlists>
-      <mox-songs class="col-md-6"></mox-songs>
+      <mox-playlists params="active_playlist_id: active_playlist_id" class="col-md-4"></mox-playlists>
+      <mox-playlist-songs params="active_playlist_id: active_playlist_id" class="col-md-4"></mox-playlist-songs>
+      <mox-songs class="col-md-4"></mox-songs>
     </div>
   </div>
 </body>

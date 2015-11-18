@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
+define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
 
     function PlaylistSong(_id, _name, _file) {
         var self              = this;
@@ -10,14 +10,18 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
     function viewModel(params) {
         var self = this;
 
-        self.playlist_id    = params.playlist_id;
+        self.playlist_id    = params.active_playlist_id;
         self.playlist_songs = ko.observableArray([]);
+
+        self.playlist_id.subscribe( function(val) {
+            self.load();
+        });
 
         self.load = function() {
             $.ajax({
                 url: '/rest/playlist_songs/',
                 type: 'GET',
-                data: { playlist_id: self.playlist_id },
+                data: { playlist_id: self.playlist_id() },
                 success: function(data) {
                             var mappedPlaylistSongs = $.map(
                                 data,
@@ -57,8 +61,16 @@ define(['jquery', 'knockout', 'knockout-sortable'], function ($, ko) {
                 data: { position: new_index+1 },
             });
         };
-
-        self.load();
+        self.play = function() {
+            var sound = new Howl({
+                urls: ['files/' + this.file],
+                format: 'ogg',
+                buffer: true,
+                autoplay : true,
+                onloaderror: function(err){ console.log('Couldnt load song.') }
+            });
+            sound.play();
+        };
     }
 
     return viewModel;

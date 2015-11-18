@@ -1,7 +1,26 @@
-.mox-playlist, .mox-song {
+body {
+    padding-top: 10px;
+}
+
+.mox-container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #eee;
+}
+
+.mox-playlist, .mox-song, .mox-playlist-song {
     margin: 5px;
     padding: 3px;
-    border: 1px solid #abc;
-    border-radius: 5px;
-    background-color: #eee;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    background-color: #ccc;
+}
+
+#sortable {
+    min-height: 50px;
+}
+
+.mox-playlist.selected {
+    background-color: #777;
 }
