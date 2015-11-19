@@ -13,8 +13,8 @@ sub root_GET {
         { playlist_id => $playlist_id },
         {
             join      => 'song',
-            '+select' => ['song.name', 'song.file'],
-            '+as'     => ['name', 'file'],
+            '+select' => ['song.name', 'song.file', 'song.type'],
+            '+as'     => ['name', 'file', 'type'],
         }
     );
     $item_rs->result_class('DBIx::Class::ResultClass::HashRefInflator');

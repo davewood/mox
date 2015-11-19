@@ -1,10 +1,11 @@
 define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
 
-    function Song(_id, _name, _file) {
+    function Song(_id, _name, _file, _type) {
         var self     = this;
         self.song_id = _id,
         self.name    = _name;
         self.file    = _file;
+        self.type    = _type;
     }
 
     function viewModel(params) {
@@ -31,7 +32,9 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
         });
 
         self.newSongReady = ko.pureComputed(function() {
-            return self.newName().length > 3 && self.newFile().file();
+            return self.newName().length > 3
+                    && self.newFile().file()
+                    && self.newFile().file().type.startsWith('audio');
         });
         self.clearNewSong = function() {
             self.newName("");
@@ -44,7 +47,14 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
                 success: function(data) {
                             var mappedSongs = $.map(
                                 data,
-                                function(item) { return new Song(item.song_id, item.name, item.file); }
+                                function(item) {
+                                    return new Song(
+                                                     item.song_id,
+                                                     item.name,
+                                                     item.file,
+                                                     item.type
+                                                    );
+                                }
                             );
                             self.songs(mappedSongs);
                          }
@@ -54,9 +64,13 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
             $.ajax({
                 url: '/rest/songs',
                 type: 'PUT',
-                data: { name: self.newName, file: self.newFile().base64String() },
+                data: {
+                        name:     self.newName(),
+                        file:     self.newFile().base64String(),
+                        filename: self.newFile().file().name
+                      },
                 success: function(data) {
-                            self.songs.push( new Song(data.song_id, data.name, data.file) );
+                            self.songs.push( new Song(data.song_id, data.name, data.file, data.type) );
                             self.clearNewSong();
                          },
             });

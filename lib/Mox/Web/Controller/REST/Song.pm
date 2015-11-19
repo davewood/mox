@@ -3,24 +3,36 @@ use Moose;
 use Try::Tiny;
 use JSON qw/ to_json /;
 use MIME::Base64 qw//;
+use MIME::Types qw//;
 extends 'Mox::Web::Controller::REST::Base';
 has '+resultset_name' => (default => 'Song');
+
+sub _process_upload {
+    my ( $self, $params ) = @_;
+    my $file = delete $params->{file};
+    my $decoded = MIME::Base64::decode($file);
+    use File::Temp qw//;
+    my $fh = File::Temp->new( UNLINK => 1 );
+    print $fh $decoded;
+    # https://rt.cpan.org/Ticket/Display.html?id=109082
+    seek $fh, 0, 0;
+    $params->{file} = $fh;
+}
+
+sub _process_mime {
+    my ( $self, $params ) = @_;
+    my $filename = delete $params->{filename};
+    my $mt = MIME::Types->new;
+    my $mime = $mt->mimeTypeOf($filename);
+    $params->{type} = $mime->type;
+}
 
 sub root_PUT {
     my ( $self, $req ) = @_;
 
     my $params = $req->parameters;
-    my $file = $params->{file};
-    my $filename =$self->resultset->result_source->column_info('file')->{fs_column_path};
-    my $decoded = MIME::Base64::decode($file);
-
-    # https://rt.cpan.org/Ticket/Display.html?id=109082
-    use File::Temp qw//;
-    my $fh = File::Temp->new( UNLINK => 1 );
-    print $fh $decoded;
-    seek $fh, 0, 0;
-
-    $params->{file} = $fh;
+    $self->_process_upload($params);
+    $self->_process_mime($params);
 
     my ($error, $item);
     try {

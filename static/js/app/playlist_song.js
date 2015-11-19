@@ -64,7 +64,6 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
         self.play = function() {
             var sound = new Howl({
                 urls: ['files/' + this.file],
-                format: 'ogg',
                 buffer: true,
                 autoplay : true,
                 onloaderror: function(err){ console.log('Couldnt load song.') }

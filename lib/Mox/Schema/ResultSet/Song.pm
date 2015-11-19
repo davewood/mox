@@ -7,6 +7,7 @@ use Params::Validate qw/ :all /;
 my $validate_create =  {
     name => { type => SCALAR, regex => qr/^[a-zA-Z0-9]{3,}$/ },
     file => { type => HANDLE },
+    type => { type => SCALAR, regex => qr/^audio\/[a-zA-Z0-9.+-]{2,}$/ },
 };
 my $validate_update = {
     map { $_, { %{$validate_create->{$_}}, optional => 1 } } keys %$validate_create

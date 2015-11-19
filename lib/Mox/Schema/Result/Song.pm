@@ -21,6 +21,10 @@ __PACKAGE__->add_column(
         is_fs_column => 1,
         #fs_column_path => '/tmp', # we set this value in config
     },
+    type => { # MIME
+        data_type   => 'varchar',
+        is_nullable => 0,
+    },
 );
 
 __PACKAGE__->set_primary_key(qw/ song_id /);
