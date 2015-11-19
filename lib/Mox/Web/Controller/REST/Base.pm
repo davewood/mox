@@ -36,7 +36,7 @@ sub root_GET {
     my @items = $item_rs->all;
     return [
         200,
-        [ 'Content-type' => 'application/json' ],
+        [ 'Content-Type' => 'application/json' ],
         [ to_json(\@items) ]
     ];
 }
@@ -54,7 +54,7 @@ sub root_PUT {
         my $e = shift;
         $error = [
             422,
-            [ 'Content-type' => 'text/plain' ],
+            [ 'Content-Type' => 'text/plain' ],
             [ "$e" ]
         ];
     };
@@ -62,7 +62,7 @@ sub root_PUT {
 
     return [
         200,
-        [ 'Content-type' => 'application/json' ],
+        [ 'Content-Type' => 'application/json' ],
         [ to_json( { $item->get_columns } ) ]
     ];
 }
@@ -80,7 +80,7 @@ sub item_POST {
         my $e = shift;
         $error = [
             422,
-            [ 'Content-type' => 'text/plain' ],
+            [ 'Content-Type' => 'text/plain' ],
             [ "$e" ]
         ];
     };
@@ -88,7 +88,7 @@ sub item_POST {
 
     return [
         200,
-        [ 'Content-type' => 'application/json' ],
+        [ 'Content-Type' => 'application/json' ],
         [ to_json( { $item->get_columns } ) ]
     ];
 }
@@ -105,7 +105,7 @@ sub item_DELETE {
         my $e = shift;
         $error = [
             400,
-            [ 'Content-type' => 'text/plain' ],
+            [ 'Content-Type' => 'text/plain' ],
             [ "$e" ]
         ];
     };
@@ -113,7 +113,7 @@ sub item_DELETE {
 
     return [
         204,
-        [ 'Content-type' => 'application/json' ],
+        [ 'Content-Type' => 'application/json' ],
         []
     ];
 }
