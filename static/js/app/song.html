@@ -2,9 +2,7 @@
   <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown'" placeholder="search">
   <div data-bind="draggable: {foreach: filteredSongs, collection: songs }">
     <div class="mox-song">
-      <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
-        <span class="glyphicon glyphicon-remove"></span>
-      </button>
+      <span data-bind="click: $component.remove" class="pull-right glyphicon glyphicon-remove"></span>
       <span data-bind="text: name"></span>
     </div>
   </div>

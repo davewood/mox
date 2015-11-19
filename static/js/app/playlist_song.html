@@ -9,12 +9,8 @@
           },
   }}">
     <div class="mox-playlist-song">
-      <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
-        <span class="glyphicon glyphicon-remove"></span>
-      </button>
-      <button class="btn btn-default btn-xs" data-bind="click: $component.play">
-        <span class="glyphicon glyphicon-play"></span>
-      </button>
+      <span data-bind="click: $component.remove" class="pull-right glyphicon glyphicon-remove"></span>
+      <span data-bind="click: $component.play" class="pull-right glyphicon glyphicon-play"></span>
       <a data-bind="attr: { href: 'files/' + file }, text: name"></a>
     </div>
   </div>

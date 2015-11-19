@@ -1,8 +1,6 @@
 <div class="mox-container" data-bind="foreach: playlists">
   <div class="mox-playlist" data-bind="click: $component.selectPlaylist, css: {selected: selected}">
-      <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
-        <span class="glyphicon glyphicon-remove"></span>
-      </button>
+      <span data-bind="click: $component.remove" class="pull-right glyphicon glyphicon-remove"></span>
       <span data-bind="text: name"></span>
     </div>
   </div>
