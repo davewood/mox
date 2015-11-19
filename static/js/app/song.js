@@ -15,6 +15,13 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
         self.newName = ko.observable("");
         self.newFile = ko.observable({ base64String: ko.observable() });
         self.searchValue = ko.observable();
+
+        // set the filename as name for the new song
+        self.newFile.subscribe(function(val) {
+            if ( val.file() && self.newName().length === 0 ) {
+                self.newName(val.file().name.replace(/\.[^/.]+$/, ''));
+            }
+        });
         self.filteredSongs = ko.pureComputed(function() {
             if(self.searchValue()) {
                 return ko.utils.arrayFilter(
