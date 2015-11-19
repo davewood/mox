@@ -1,10 +1,11 @@
 define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
 
-    function PlaylistSong(_id, _name, _file) {
+    function PlaylistSong(_id, _name, _file, _type) {
         var self              = this;
         self.playlist_song_id = _id;
         self.name             = ko.observable(_name);
         self.file             = _file;
+        self.type             = _type;
     }
 
     function viewModel(params) {
@@ -25,7 +26,13 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
                 success: function(data) {
                             var mappedPlaylistSongs = $.map(
                                 data,
-                                function(item) { return new PlaylistSong(item.playlist_song_id, item.name, item.file); }
+                                function(item) { return new PlaylistSong(
+                                    item.playlist_song_id,
+                                    item.name,
+                                    item.file,
+                                    item.type
+                                );
+                                }
                             );
                             self.playlist_songs(mappedPlaylistSongs);
                          }
@@ -39,6 +46,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
                 success: function(data) {
                             newSong.playlist_song_id = data.playlist_song_id;
                             newSong.file = data.file;
+                            newSong.type = data.type;
                          },
                 error: function() {
                            self.playlist_songs.remove(newSong);
@@ -62,13 +70,28 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
             });
         };
         self.play = function() {
-            var sound = new Howl({
-                urls: ['files/' + this.file],
-                buffer: true,
-                autoplay : true,
-                onloaderror: function(err){ console.log('Couldnt load song.') }
-            });
-            sound.play();
+            console.log(this);
+            var format;
+            switch(this.type) {
+                case 'audio/mpeg':
+                    format = 'mp3';
+                    break;
+                case 'audio/ogg':
+                    format = 'ogg';
+                    break;
+                default:
+                    $.notify("Unknown type: " + this.type);
+            }
+            if (format) {
+                var sound = new Howl({
+                    urls: ['files/' + this.file],
+                    format: format,
+                    buffer: true,
+                    autoplay : true,
+                    onloaderror: function(){ $.notify('Couldnt load song.'); }
+                });
+                sound.play();
+            }
         };
     }
 

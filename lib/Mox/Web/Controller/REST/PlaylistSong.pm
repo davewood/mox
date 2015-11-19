@@ -54,7 +54,16 @@ sub root_PUT {
     return [
         200,
         [ 'Content-type' => 'application/json' ],
-        [ to_json( { $item->get_columns, name => $item->song->name, file => $item->song->get_column('file') } ) ]
+        [
+            to_json(
+                {
+                    $item->get_columns,
+                    name => $item->song->name,
+                    file => $item->song->get_column('file'),
+                    type => $item->song->type,
+                }
+            )
+        ]
     ];
 }
 
