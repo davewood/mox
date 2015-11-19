@@ -15,17 +15,13 @@
 <div class="modal fade" id="newPlaylistModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">new Playlist</h4>
-      </div>
       <div class="modal-body">
-        <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal" data-bind="click: create, enable: newName().length >= 3">
-          Save
-        </button>
+        <form>
+          <div class="form-group">
+            <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name">
+          </div>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: create, enable: newName().length >= 3">Save</button>
+        </form>
       </div>
     </div>
   </div>

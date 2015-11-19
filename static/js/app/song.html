@@ -1,5 +1,5 @@
 <div class="mox-container">
-  <input class="form-control" data-bind="value: searchValue, valueUpdate: 'afterkeydown'" placeholder="search">
+  <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown'" placeholder="search">
   <div data-bind="draggable: {foreach: filteredSongs, collection: songs }">
     <div class="mox-song">
       <button class="btn btn-default btn-xs" data-bind="click: $component.remove">
@@ -17,18 +17,16 @@
 <div class="modal fade" id="newSongModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">new Song</h4>
-      </div>
       <div class="modal-body">
-        <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
-        <input type="file" data-bind="fileInput: newFile">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal" data-bind="click: create, enable: newSongReady">
-          Save
-        </button>
+        <form>
+          <div class="form-group">
+            <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
+          </div>
+          <div class="form-group">
+            <input type="file" data-bind="fileInput: newFile">
+          </div>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: create, enable: newSongReady">Save</button>
+        </form>
       </div>
     </div>
   </div>

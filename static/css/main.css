@@ -4,21 +4,26 @@ body {
 
 .mox-container {
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 3px;
     background-color: #eee;
+    min-height: 150px;
+    padding: 3px;
+    padding-bottom: 0px;
+}
+
+#sortable {
+    min-height: 100px;
+}
+#search {
+    margin-bottom: 3px;
 }
 
 .mox-playlist, .mox-song, .mox-playlist-song {
-    margin: 5px;
+    margin-bottom: 3px;
     padding: 3px;
     border: 1px solid #aaa;
     border-radius: 3px;
     background-color: #ccc;
-}
-
-#sortable {
-    min-height: 50px;
 }
 
 .mox-playlist.selected {
