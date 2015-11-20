@@ -57,5 +57,36 @@ sub root_PUT {
     ];
 }
 
+sub data_GET {
+    my ($self, $req, $id) = @_;
+
+    my ($error, $item, $fh);
+    try {
+        $item = $self->_get_item($id);
+        my $path = $item->file->stringify;
+        #$fh = $item->file->open('<:raw');
+        open( $fh, '<', $path )
+          or die "Could not open file for reading. ($!)";
+        #Plack::Util::set_io_path( $fh, $path ); # needed for XSendfile header
+    }
+    catch {
+        my $e = shift;
+        $error = [
+            400,
+            [ 'Content-Type' => 'text/plain' ],
+            [ "$e" ]
+        ];
+    };
+
+    return $error if $error;
+
+    $req->encoding(undef); # send binary file
+    return [
+        200,
+        [ 'Content-Type' => $item->type, 'Content-Length' => -s $fh ],
+        $fh
+    ];
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

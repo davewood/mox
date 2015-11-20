@@ -1,10 +1,10 @@
 define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
 
-    function PlaylistSong(_id, _name, _file, _type) {
+    function PlaylistSong(_id, _name, _song_id, _type) {
         var self              = this;
         self.playlist_song_id = _id;
         self.name             = ko.observable(_name);
-        self.file             = _file;
+        self.song_id          = _song_id;
         self.type             = _type;
     }
 
@@ -29,7 +29,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
                                 function(item) { return new PlaylistSong(
                                     item.playlist_song_id,
                                     item.name,
-                                    item.file,
+                                    item.song_id,
                                     item.type
                                 );
                                 }
@@ -45,8 +45,8 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
                 data: { playlist_id: self.playlist_id, song_id: newSong.song_id, position: new_index+1 },
                 success: function(data) {
                             newSong.playlist_song_id = data.playlist_song_id;
-                            newSong.file = data.file;
-                            newSong.type = data.type;
+                            newSong.song_id          = data.song_id;
+                            newSong.type             = data.type;
                          },
                 error: function() {
                            self.playlist_songs.remove(newSong);
@@ -70,7 +70,6 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
             });
         };
         self.play = function() {
-            console.log(this);
             var format;
             switch(this.type) {
                 case 'audio/mpeg':
@@ -84,7 +83,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
             }
             if (format) {
                 var sound = new Howl({
-                    urls: ['files/' + this.file],
+                    urls: ['rest/songs/' + this.song_id + '/data'],
                     format: format,
                     buffer: true,
                     autoplay : true,

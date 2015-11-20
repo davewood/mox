@@ -4,7 +4,6 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
         var self     = this;
         self.song_id = _id,
         self.name    = _name;
-        self.file    = _file;
         self.type    = _type;
     }
 
@@ -58,7 +57,6 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
                                     return new Song(
                                                      item.song_id,
                                                      item.name,
-                                                     item.file,
                                                      item.type
                                                     );
                                 }
@@ -77,7 +75,7 @@ define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bi
                         filename: self.newFile().file().name
                       },
                 success: function(data) {
-                            self.songs.push( new Song(data.song_id, data.name, data.file, data.type) );
+                            self.songs.push( new Song(data.song_id, data.name, data.type) );
                             self.clearNewSong();
                          },
             });

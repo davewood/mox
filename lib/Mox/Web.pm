@@ -77,6 +77,7 @@ router as {
     route '/rest/playlist_songs/:id/move' => 'REST.rest_playlist_song_controller.move';
     route '/rest/songs'               => 'REST.rest_song_controller.root';
     route '/rest/songs/:id'           => 'REST.rest_song_controller.item';
+    route '/rest/songs/:id/data'      => 'REST.rest_song_controller.data';
 };
 
 __PACKAGE__->meta->make_immutable;
