@@ -65,9 +65,10 @@ router as {
             ]
         )
     );
+    wrap 'Plack::Middleware::XSendfile';
     wrap 'Plack::Middleware::Static' => (
         root => 'static_dir',
-        path => literal(qr{^/(?:files|js|css|bower_components)/}),
+        path => literal(qr{^/(?:js|css|bower_components)/}),
     );
     route '/'                         => 'root_controller.index';
     route '/rest/playlists'           => 'REST.rest_playlist_controller.root';

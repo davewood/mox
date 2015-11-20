@@ -64,10 +64,8 @@ sub data_GET {
     try {
         $item = $self->_get_item($id);
         my $path = $item->file->stringify;
-        #$fh = $item->file->open('<:raw');
-        open( $fh, '<', $path )
-          or die "Could not open file for reading. ($!)";
-        #Plack::Util::set_io_path( $fh, $path ); # needed for XSendfile header
+        $fh = $item->file->openr;
+        Plack::Util::set_io_path( $fh, $path ); # needed for XSendfile header
     }
     catch {
         my $e = shift;
