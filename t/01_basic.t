@@ -12,6 +12,9 @@ is($driver->get_title, 'Mox', 'check page title');
 
 $driver->set_implicit_wait_timeout(250);
 
+my $delete_song_cb;
+my $delete_playlist_cb;
+
 {
     my $song_container = $driver->find_element( 'mox-songs', 'tag_name' );
     is( 0, scalar get_songs($song_container), 'no songs available' );
@@ -51,11 +54,13 @@ $driver->set_implicit_wait_timeout(250);
     my $song = $songs[0];
     is($song->get_text(), $song_name, 'song name was saved correctly');
 
-    my $delete_btn = $driver->find_child_element($song, 'glyphicon-remove', 'class');
-    ok($delete_btn, 'found delete button');
-    $delete_btn->click;
-    $driver->pause(1000);
-    is(0, scalar get_songs($song_container), 'new song has been deleted.');
+    $delete_song_cb = sub {
+        my $delete_btn = $driver->find_child_element($song, 'glyphicon-remove', 'class');
+        ok($delete_btn, 'found delete button');
+        $delete_btn->click;
+        $driver->pause(1000);
+        is(0, scalar get_songs($song_container), 'new song has been deleted.');
+    }
 }
 
 {
@@ -91,13 +96,17 @@ $driver->set_implicit_wait_timeout(250);
     $playlist->click;
     like($playlist->get_attribute('class'), qr/selected/ , 'playlist is selected');
 
-    my $delete_btn = $driver->find_child_element($playlist, 'glyphicon-remove', 'class');
-    ok($delete_btn, 'found delete button');
-    $delete_btn->click;
-    $driver->pause(1000);
-    is(0, scalar get_playlists($playlist_container), 'new playlist has been deleted.');
+    $delete_playlist_cb = sub {
+        my $delete_btn = $driver->find_child_element($playlist, 'glyphicon-remove', 'class');
+        ok($delete_btn, 'found delete button');
+        $delete_btn->click;
+        $driver->pause(1000);
+        is(0, scalar get_playlists($playlist_container), 'new playlist has been deleted.');
+    }
 }
 
+$delete_song_cb->();
+$delete_playlist_cb->();
 $driver->quit();
 
 sub get_songs {
