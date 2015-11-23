@@ -5,7 +5,7 @@ use warnings;
 use Params::Validate qw/ :all /;
 
 my $validate_create =  {
-    name => { type => SCALAR, regex => qr/^[a-zA-Z0-9]{3,}$/ },
+    name => { type => SCALAR, regex => qr/^[a-zA-Z0-9_ -]{3,}$/ },
 };
 my $validate_update = {
     map { $_, { %{$validate_create->{$_}}, optional => 1 } } keys %$validate_create
