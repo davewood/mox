@@ -3,11 +3,12 @@ use 5.018;
 use warnings;
 use Selenium::Firefox;
 use Test::More;
+use FindBin qw/$Bin/;
 
 my $driver = Selenium::Firefox->new;
 $driver->get('http://localhost:3000');
 
-is($driver->get_title, 'Mox');
+is($driver->get_title, 'Mox', 'check page title');
 
 $driver->set_implicit_wait_timeout(250);
 
@@ -26,9 +27,35 @@ $driver->set_implicit_wait_timeout(250);
     ok($save_btn, 'found save button');
     ok($save_btn->get_attribute('disabled'), 'save button is disabled');
 
-    $btn->click;
-    $driver->pause(1000);
+    my $name_input = $driver->find_child_element($modal, 'newSongName', 'id');
+    ok($name_input, 'found name input field');
+
+    my $file_input = $driver->find_child_element($modal, 'newSongFile', 'id');
+    ok($file_input, 'found file input field');
+    my $song_name = '__test_song_001__';
+    my $file_name = "$song_name.oga";
+    my $upload = "$Bin/var/$file_name";
+    ok(-e $upload, 'upload file exists');
+    $file_input->send_keys($upload);
+    $driver->pause(3000);
+    is($name_input->get_value, $song_name, 'name was auto-filled-in with filename. (file-extension stripped)');
+    ok(!$save_btn->get_attribute('disabled'), 'save button is no longer disabled');
+    $driver->pause(250);
+
+    $save_btn->click;
+    $driver->pause(2000);
     ok(!$modal->is_displayed, 'modal is no longer displayed');
+
+    my @songs = get_songs($song_container);
+    is(1, scalar @songs, 'one song available');
+    my $song = $songs[0];
+    is($song->get_text(), $song_name, 'song name was saved correctly');
+
+    my $delete_btn = $driver->find_child_element($song, 'glyphicon-remove', 'class');
+    ok($delete_btn, 'found delete button');
+    $delete_btn->click;
+    $driver->pause(1000);
+    is(0, scalar get_songs($song_container), 'new song has been deleted.');
 }
 
 {
@@ -71,7 +98,6 @@ $driver->set_implicit_wait_timeout(250);
     is(0, scalar get_playlists($playlist_container), 'new playlist has been deleted.');
 }
 
-$driver->pause(3000);
 $driver->quit();
 
 sub get_songs {

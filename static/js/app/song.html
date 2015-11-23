@@ -18,10 +18,10 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
+            <input id="newSongName" class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
           </div>
           <div class="form-group">
-            <input type="file" data-bind="fileInput: newFile">
+            <input id="newSongFile" type="file" data-bind="fileInput: newFile">
           </div>
           <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: create, enable: newSongReady">Save</button>
         </form>
