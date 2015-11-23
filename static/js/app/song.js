@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
+define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
 
     function Song(_id, _name, _file, _type) {
         var self     = this;
