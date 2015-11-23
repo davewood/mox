@@ -3,6 +3,8 @@ use OX;
 use OX::RouteBuilder::REST;
 use Mox::Schema;
 
+our $VERSION = '0.01';
+
 has connect_info => ( is => 'ro', isa => 'HashRef', required => 1 );
 has fs_path      => ( is => 'ro', isa => 'Str',     required => 1 );
 has model => (
