@@ -23,7 +23,7 @@
     "Sortable": "~1.4.2",
     "knockout": "~3.3.0",
     "text": "requirejs-text#~2.0.14",
-    "notifyjs": "~0.3.4",
+    "notifyjs": "~0.3.3",
     "knockout-file-bindings": "~1.0.2",
     "howler.js": "~1.1.28"
   }
