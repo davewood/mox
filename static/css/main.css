@@ -28,6 +28,18 @@
     margin-bottom: 0;
 }
 
+.drop-info {
+    text-align: center;
+    background-color: #e7e7e7;
+    color: #aaa;
+    padding: 3px;
+    border: 1px dashed #aaa;
+    border-radius: 3px;
+}
+.drop-info:after {
+    content: 'drop songs here';
+}
+
 .mox-item.selected {
     background-color: #777;
 }

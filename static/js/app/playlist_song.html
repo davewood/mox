@@ -1,5 +1,5 @@
 <div class="mox-container">
-  <div id="sortable" data-bind="visible: playlist_id, sortable: {foreach: playlist_songs, options: {
+    <div id="sortable" data-bind="visible: playlist_id, css: { 'drop-info': !playlist_songs().length },  sortable: {foreach: playlist_songs, options: {
           group: { pull: false },
           onUpdate: function(evt) {
               $component.move(evt.oldIndex, evt.newIndex);
