@@ -6,21 +6,16 @@
   </div>
 </div>
 
-<button id="new_playlist_btn" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#newPlaylistModal">
+<button id="new_playlist_btn" type="button" class="btn btn-default btn-xs" data-bind="click: showForm, visible: !formVisible()">
   <span class="glyphicon glyphicon-plus"></span>
 </button>
 
-<div class="modal fade" id="newPlaylistModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name">
-          </div>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: create, enable: newName().length >= 3">Save</button>
-        </form>
-      </div>
+<form id="newPlaylistForm" data-bind="submit: create, visible: formVisible">
+  <div class="mox-container">
+    <div class="form-group">
+      <input class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new playlist name">
     </div>
+    <button type="submit" class="btn btn-sm btn-primary" data-bind="enable: newName().length > 2">Save</button>
+    <button type="button" class="btn btn-sm btn-default" data-bind="click: hideForm">Cancel</button>
   </div>
-</div>
+</form>

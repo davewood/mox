@@ -1,4 +1,4 @@
-define(['jquery', 'knockout', 'bootstrap', 'howler'], function ($, ko) {
+define(['jquery', 'knockout'], function ($, ko) {
 
     function Playlist(_id, _name) {
         var self         = this;
@@ -12,6 +12,14 @@ define(['jquery', 'knockout', 'bootstrap', 'howler'], function ($, ko) {
 
         self.playlists = ko.observableArray([]);
         self.newName   = ko.observable("");
+
+        self.formVisible = ko.observable(false);
+        self.showForm = function () {
+            self.formVisible(true);
+        };
+        self.hideForm = function () {
+           self.formVisible(false);
+        }
 
         self.selectPlaylist = function(playlist) {
             params.active_playlist_id(playlist.playlist_id);
@@ -41,6 +49,7 @@ define(['jquery', 'knockout', 'bootstrap', 'howler'], function ($, ko) {
                 success: function(data) {
                             self.playlists.push( new Playlist(data.playlist_id, data.name) );
                             self.newName("");
+                            self.hideForm();
                          },
             });
         };

@@ -1,5 +1,5 @@
 <div class="mox-container">
-  <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown'" placeholder="search">
+    <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown', visible: songs().length > 0" placeholder="search">
   <div data-bind="draggable: {foreach: filteredSongs, collection: songs }">
     <div class="mox-song">
       <span data-bind="click: $component.remove" class="pull-right glyphicon glyphicon-remove"></span>
@@ -8,24 +8,19 @@
   </div>
 </div>
 
-<button id="new_song_btn" type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#newSongModal">
+<button id="new_song_btn" type="button" class="btn btn-default btn-xs" data-bind="click: showForm, visible: !formVisible()">
   <span class="glyphicon glyphicon-plus"></span>
 </button>
 
-<div class="modal fade" id="newSongModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <input id="newSongName" class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
-          </div>
-          <div class="form-group">
-            <input id="newSongFile" type="file" data-bind="fileInput: newFile">
-          </div>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: create, enable: newSongReady">Save</button>
-        </form>
-      </div>
+<form id="newSongForm" data-bind="submit: create, visible: formVisible">
+  <div class="mox-container">
+    <div class="form-group">
+      <input id="newSongName" class="form-control" data-bind="value: newName, valueUpdate: 'afterkeydown'" placeholder="new song name">
     </div>
+    <div class="form-group">
+      <input id="newSongFile" type="file" data-bind="fileInput: newFile">
+    </div>
+    <button type="submit" class="btn btn-sm btn-primary" data-bind="enable: newSongReady">Save</button>
+    <button type="button" class="btn btn-sm btn-default" data-bind="click: hideForm">Cancel</button>
   </div>
-</div>
+</form>

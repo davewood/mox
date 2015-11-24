@@ -14,6 +14,13 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
         self.newName = ko.observable("");
         self.newFile = ko.observable({ base64String: ko.observable() });
         self.searchValue = ko.observable();
+        self.formVisible = ko.observable(false);
+        self.showForm = function () {
+            self.formVisible(true);
+        };
+        self.hideForm = function () {
+           self.formVisible(false);
+        }
 
         // set the filename as name for the new song
         self.newFile.subscribe(function(val) {
@@ -77,6 +84,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
                 success: function(data) {
                             self.songs.push( new Song(data.song_id, data.name, data.type) );
                             self.clearNewSong();
+                            self.hideForm();
                          },
             });
         };

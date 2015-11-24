@@ -1,18 +1,15 @@
-body {
-    padding-top: 10px;
-}
-
 .mox-container {
     border: 1px solid #ccc;
     border-radius: 3px;
     background-color: #eee;
-    min-height: 150px;
+    min-height: 80px;
     padding: 3px;
-    padding-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 #sortable {
-    min-height: 100px;
+    min-height: 60px;
 }
 #search {
     margin-bottom: 3px;
