@@ -17,7 +17,7 @@ my $delete_playlist_cb;
 
 {
     my $song_container = $driver->find_element( 'mox-songs', 'tag_name' );
-    is( 0, scalar get_songs($song_container), 'no songs available' );
+    is( 0, scalar get_items($song_container), 'no songs available' );
 
     my $btn = $driver->find_element_by_id('new_song_btn');
     ok( $btn, 'found button to add new song' );
@@ -49,7 +49,7 @@ my $delete_playlist_cb;
     $driver->pause(250);
     ok(!$form->is_displayed, 'form is no longer displayed');
 
-    my @songs = get_songs($song_container);
+    my @songs = get_items($song_container);
     is(1, scalar @songs, 'one song available');
     my $song = $songs[0];
     is($song->get_text(), $song_name, 'song name was saved correctly');
@@ -59,13 +59,13 @@ my $delete_playlist_cb;
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
         $driver->pause(250);
-        is(0, scalar get_songs($song_container), 'new song has been deleted.');
+        is(0, scalar get_items($song_container), 'new song has been deleted.');
     }
 }
 
 {
     my $playlist_container = $driver->find_element('mox-playlists', 'tag_name');
-    is(0, scalar get_playlists($playlist_container), 'no playlists available');
+    is(0, scalar get_items($playlist_container), 'no playlists available');
 
     my $btn = $driver->find_element_by_id('new_playlist_btn');
     ok($btn, 'found button to add new playlist');
@@ -87,7 +87,7 @@ my $delete_playlist_cb;
     $save_btn->click;
     $driver->pause(250);
     ok(!$form->is_displayed, 'form is no longer displayed');
-    my @playlists = get_playlists($playlist_container);
+    my @playlists = get_items($playlist_container);
     is(1, scalar @playlists, 'one playlist available');
     my $playlist = $playlists[0];
     is($playlist->get_text(), $playlist_name, 'playlist name was saved correctly');
@@ -101,7 +101,7 @@ my $delete_playlist_cb;
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
         $driver->pause(250);
-        is(0, scalar get_playlists($playlist_container), 'new playlist has been deleted.');
+        is(0, scalar get_items($playlist_container), 'new playlist has been deleted.');
     }
 }
 
@@ -109,15 +109,10 @@ $delete_song_cb->();
 $delete_playlist_cb->();
 $driver->quit();
 
-sub get_songs {
+sub get_items {
     my $container = shift;
-    my @songs = $driver->find_child_elements($container, 'mox-item', 'class');
-    return @songs;
-}
-sub get_playlists {
-    my $container = shift;
-    my @playlists = $driver->find_child_elements($container, 'mox-item', 'class');
-    return @playlists;
+    my @items = $driver->find_child_elements($container, 'mox-item', 'class');
+    return @items;
 }
 
 done_testing;
