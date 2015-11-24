@@ -15,7 +15,12 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
         self.playlist_songs = ko.observableArray([]);
 
         self.playlist_id.subscribe( function(val) {
-            self.load();
+            if(val) {
+                self.load();
+            }
+            else {
+                self.playlist_songs = ko.observableArray([]);
+            }
         });
 
         self.load = function() {

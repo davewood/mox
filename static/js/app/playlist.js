@@ -28,6 +28,12 @@ define(['jquery', 'knockout'], function ($, ko) {
             });
             playlist.selected(true);
         };
+        self.deselectPlaylist = function(playlist) {
+            if( playlist.playlist_id === params.active_playlist_id() ) {
+                params.active_playlist_id(null);
+            }
+            playlist.selected(false);
+        };
         self.load = function() {
             $.ajax({
                 url: '/rest/playlists',
@@ -58,7 +64,10 @@ define(['jquery', 'knockout'], function ($, ko) {
                 url: '/rest/playlists/' + this.playlist_id,
                 type: 'DELETE',
                 context: this,
-                success: function(data) { self.playlists.remove(this); },
+                success: function(data) {
+                            self.deselectPlaylist(this);
+                            self.playlists.remove(this);
+                         },
             });
         };
 
