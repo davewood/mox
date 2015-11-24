@@ -22,32 +22,32 @@ my $delete_playlist_cb;
     my $btn = $driver->find_element_by_id('new_song_btn');
     ok( $btn, 'found button to add new song' );
     $btn->click;
-    my $modal = $driver->find_element_by_id('newSongForm');
-    ok($modal, 'found newSongForm');
-    $driver->pause(200);
-    ok($modal->is_displayed, 'modal is displayed');
-    my $save_btn = $driver->find_child_element($modal, 'button', 'tag_name');
+    my $form = $driver->find_element_by_id('newSongForm');
+    ok($form, 'found newSongForm');
+    $driver->pause(250);
+    ok($form->is_displayed, 'form is displayed');
+    my $save_btn = $driver->find_child_element($form, 'button', 'tag_name');
     ok($save_btn, 'found save button');
     ok($save_btn->get_attribute('disabled'), 'save button is disabled');
 
-    my $name_input = $driver->find_child_element($modal, 'newSongName', 'id');
+    my $name_input = $driver->find_child_element($form, 'newSongName', 'id');
     ok($name_input, 'found name input field');
 
-    my $file_input = $driver->find_child_element($modal, 'newSongFile', 'id');
+    my $file_input = $driver->find_child_element($form, 'newSongFile', 'id');
     ok($file_input, 'found file input field');
     my $song_name = '__test_song_001__';
     my $file_name = "$song_name.oga";
     my $upload = "$Bin/var/$file_name";
     ok(-e $upload, 'upload file exists');
     $file_input->send_keys($upload);
-    $driver->pause(3000);
+    $driver->pause(250);
     is($name_input->get_value, $song_name, 'name was auto-filled-in with filename. (file-extension stripped)');
     ok(!$save_btn->get_attribute('disabled'), 'save button is no longer disabled');
     $driver->pause(250);
 
     $save_btn->click;
-    $driver->pause(2000);
-    ok(!$modal->is_displayed, 'modal is no longer displayed');
+    $driver->pause(250);
+    ok(!$form->is_displayed, 'form is no longer displayed');
 
     my @songs = get_songs($song_container);
     is(1, scalar @songs, 'one song available');
@@ -58,7 +58,7 @@ my $delete_playlist_cb;
         my $delete_btn = $driver->find_child_element($song, 'glyphicon-remove', 'class');
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
-        $driver->pause(1000);
+        $driver->pause(250);
         is(0, scalar get_songs($song_container), 'new song has been deleted.');
     }
 }
@@ -71,22 +71,22 @@ my $delete_playlist_cb;
     ok($btn, 'found button to add new playlist');
     $btn->click;
 
-    my $modal = $driver->find_element_by_id('newPlaylistForm');
-    ok($modal, 'found newPlaylistForm');
-    $driver->pause(200);
-    ok($modal->is_displayed, 'modal is displayed');
-    my $save_btn = $driver->find_child_element($modal, 'button', 'tag_name');
+    my $form = $driver->find_element_by_id('newPlaylistForm');
+    ok($form, 'found newPlaylistForm');
+    $driver->pause(250);
+    ok($form->is_displayed, 'form is displayed');
+    my $save_btn = $driver->find_child_element($form, 'button', 'tag_name');
     ok($save_btn, 'found save button');
     ok($save_btn->get_attribute('disabled'), 'save button is disabled');
-    my $input = $driver->find_child_element($modal, 'input', 'tag_name');
+    my $input = $driver->find_child_element($form, 'input', 'tag_name');
     ok($input, 'found input');
     my $playlist_name = '__test_playlist_001__';
     $input->send_keys($playlist_name);
     ok(!$save_btn->get_attribute('disabled'), 'save button is no longer disabled');
     $driver->pause(250);
     $save_btn->click;
-    $driver->pause(1000);
-    ok(!$modal->is_displayed, 'modal is no longer displayed');
+    $driver->pause(250);
+    ok(!$form->is_displayed, 'form is no longer displayed');
     my @playlists = get_playlists($playlist_container);
     is(1, scalar @playlists, 'one playlist available');
     my $playlist = $playlists[0];
@@ -100,7 +100,7 @@ my $delete_playlist_cb;
         my $delete_btn = $driver->find_child_element($playlist, 'glyphicon-remove', 'class');
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
-        $driver->pause(1000);
+        $driver->pause(250);
         is(0, scalar get_playlists($playlist_container), 'new playlist has been deleted.');
     }
 }
