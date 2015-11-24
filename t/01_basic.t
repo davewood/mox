@@ -111,12 +111,12 @@ $driver->quit();
 
 sub get_songs {
     my $container = shift;
-    my @songs = $driver->find_child_elements($container, 'mox-song', 'class');
+    my @songs = $driver->find_child_elements($container, 'mox-item', 'class');
     return @songs;
 }
 sub get_playlists {
     my $container = shift;
-    my @playlists = $driver->find_child_elements($container, 'mox-playlist', 'class');
+    my @playlists = $driver->find_child_elements($container, 'mox-item', 'class');
     return @playlists;
 }
 

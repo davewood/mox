@@ -1,5 +1,5 @@
 <div class="mox-container" data-bind="foreach: playlists">
-  <div class="mox-playlist" data-bind="click: $component.selectPlaylist, css: {selected: selected}">
+  <div class="mox-item" data-bind="click: $component.selectPlaylist, css: {selected: selected}">
       <span data-bind="click: $component.remove, clickBubble: false" class="pull-right glyphicon glyphicon-remove"></span>
       <span data-bind="text: name"></span>
     </div>
