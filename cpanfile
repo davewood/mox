@@ -18,3 +18,4 @@ requires 'MIME::Base64';
 requires 'MIME::Types';
 
 test_requires 'Test::More';
+test_requires 'Selenium::Remote::Driver';

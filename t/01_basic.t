@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-use 5.018;
 use warnings;
 use Selenium::Firefox;
 use Test::More;
