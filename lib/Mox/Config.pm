@@ -1,6 +1,7 @@
 package Mox::Config;
 use Moose;
 use Config::ZOMG;
+use feature qw/say/;
 
 has config => (
     is      => 'ro',
