@@ -6,7 +6,7 @@ use Test::More;
 use FindBin qw/$Bin/;
 
 my $driver = Selenium::Firefox->new;
-$driver->get('http://localhost:3000');
+$driver->get('http://localhost:5000');
 
 is($driver->get_title, 'Mox', 'check page title');
 
