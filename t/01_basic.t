@@ -17,7 +17,7 @@ my $delete_playlist_cb;
 
 {
     my $song_container = $driver->find_element( 'mox-songs', 'tag_name' );
-    is( 0, scalar get_items($song_container), 'no songs available' );
+    is( scalar get_items($song_container), 0, 'no songs available' );
 
     my $btn = $driver->find_element_by_id('new_song_btn');
     ok( $btn, 'found button to add new song' );
@@ -50,7 +50,7 @@ my $delete_playlist_cb;
     ok(!$form->is_displayed, 'form is no longer displayed');
 
     my @songs = get_items($song_container);
-    is(1, scalar @songs, 'one song available');
+    is(scalar @songs, 1, 'one song available');
     my $song = $songs[0];
     is($song->get_text(), $song_name, 'song name was saved correctly');
 
@@ -59,13 +59,13 @@ my $delete_playlist_cb;
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
         $driver->pause(250);
-        is(0, scalar get_items($song_container), 'new song has been deleted.');
+        is(scalar get_items($song_container), 0, 'new song has been deleted.');
     }
 }
 
 {
     my $playlist_container = $driver->find_element('mox-playlists', 'tag_name');
-    is(0, scalar get_items($playlist_container), 'no playlists available');
+    is(scalar get_items($playlist_container), 0,'no playlists available');
 
     my $btn = $driver->find_element_by_id('new_playlist_btn');
     ok($btn, 'found button to add new playlist');
@@ -88,13 +88,13 @@ my $delete_playlist_cb;
     $driver->pause(250);
     ok(!$form->is_displayed, 'form is no longer displayed');
     my @playlists = get_items($playlist_container);
-    is(1, scalar @playlists, 'one playlist available');
+    is(scalar @playlists, 1, 'one playlist available');
     my $playlist = $playlists[0];
     is($playlist->get_text(), $playlist_name, 'playlist name was saved correctly');
 
     unlike($playlist->get_attribute('class'), qr/selected/ , 'playlist is not selected');
     my $playlist_song_container = $driver->find_element('mox-playlist-songs', 'tag_name');
-    is(0, scalar get_items($playlist_song_container), 'no playlist_songs available');
+    is(scalar get_items($playlist_song_container), 0, 'no playlist_songs available');
     my $sortable = $driver->find_child_element($playlist_song_container, 'sortable', 'id');
     ok($sortable, 'got a sortable container');
     unlike($sortable->get_attribute('class'), qr/drop-info/, 'sortable does not have class drop-info');
@@ -107,7 +107,7 @@ my $delete_playlist_cb;
         ok($delete_btn, 'found delete button');
         $delete_btn->click;
         $driver->pause(250);
-        is(0, scalar get_items($playlist_container), 'new playlist has been deleted.');
+        is(scalar get_items($playlist_container), 0, 'new playlist has been deleted.');
     }
 }
 
