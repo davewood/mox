@@ -13,5 +13,8 @@ requires 'Dir::Self';
 requires 'Params::Validate';
 requires 'DBIx::Class::InflateColumn::FS';
 requires 'File::Temp';
+requires 'JSON';
+requires 'MIME::Base64';
+requires 'MIME::Types';
 
 test_requires 'Test::More';
