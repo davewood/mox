@@ -17,6 +17,7 @@ define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], fu
         self.formVisible = ko.observable(false);
         self.showForm = function () {
             self.formVisible(true);
+            $('#newSongForm input').first().focus();
         };
         self.hideForm = function () {
            self.formVisible(false);

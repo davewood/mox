@@ -16,6 +16,7 @@ define(['jquery', 'knockout'], function ($, ko) {
         self.formVisible = ko.observable(false);
         self.showForm = function () {
             self.formVisible(true);
+            $('#newPlaylistForm input').first().focus();
         };
         self.hideForm = function () {
            self.formVisible(false);
