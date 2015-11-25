@@ -28,6 +28,8 @@ require(['jquery', 'knockout', 'notifyjs'], function( $, ko ) {
 
     $(document).ready(function(){
 
+        ko.options.deferUpdates = true;
+
         $( document ).ajaxError(function( event, xhr, settings, thrownError ) {
             $.notify(xhr.responseText, "error");
         });
