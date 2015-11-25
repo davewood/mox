@@ -1,7 +1,6 @@
 package Mox::Config;
 use Moose;
 use Config::ZOMG;
-use 5.020;
 
 has config => (
     is      => 'ro',
