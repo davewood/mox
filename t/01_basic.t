@@ -93,8 +93,14 @@ my $delete_playlist_cb;
     is($playlist->get_text(), $playlist_name, 'playlist name was saved correctly');
 
     unlike($playlist->get_attribute('class'), qr/selected/ , 'playlist is not selected');
+    my $playlist_song_container = $driver->find_element('mox-playlist-songs', 'tag_name');
+    is(0, scalar get_items($playlist_song_container), 'no playlist_songs available');
+    my $sortable = $driver->find_child_element($playlist_song_container, 'sortable', 'id');
+    ok($sortable, 'got a sortable container');
+    unlike($sortable->get_attribute('class'), qr/drop-info/, 'sortable does not have class drop-info');
     $playlist->click;
     like($playlist->get_attribute('class'), qr/selected/ , 'playlist is selected');
+    like($sortable->get_attribute('class'), qr/drop-info/, 'sortable has class drop-info');
 
     $delete_playlist_cb = sub {
         my $delete_btn = $driver->find_child_element($playlist, 'glyphicon-remove', 'class');

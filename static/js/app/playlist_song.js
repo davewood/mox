@@ -19,8 +19,14 @@ define(['jquery', 'knockout', 'knockout-sortable', 'howler'], function ($, ko) {
                 self.load();
             }
             else {
-                self.playlist_songs = ko.observableArray([]);
+                self.playlist_songs.removeAll();
             }
+        });
+        self.showSortable = ko.pureComputed(function() {
+            return typeof self.playlist_id() !== 'undefined';
+        });
+        self.showDropInfo = ko.pureComputed(function() {
+            return (self.showSortable() && (self.playlist_songs().length === 0));
         });
 
         self.load = function() {

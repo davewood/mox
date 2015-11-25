@@ -30,7 +30,7 @@ define(['jquery', 'knockout'], function ($, ko) {
         };
         self.deselectPlaylist = function(playlist) {
             if( playlist.playlist_id === params.active_playlist_id() ) {
-                params.active_playlist_id(null);
+                params.active_playlist_id(undefined);
             }
             playlist.selected(false);
         };
