@@ -1,6 +1,6 @@
 define(['jquery', 'knockout', 'knockout-sortable', 'knockout-file-bindings'], function ($, ko) {
 
-    function Song(_id, _name, _file, _type) {
+    function Song(_id, _name, _type) {
         var self     = this;
         self.song_id = _id,
         self.name    = _name;

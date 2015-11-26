@@ -1,5 +1,5 @@
 <div class="mox-container">
-    <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown', visible: songs().length > 0" placeholder="search">
+  <input id="search" class="form-control input-sm" data-bind="value: searchValue, valueUpdate: 'afterkeydown', visible: songs().length > 0" placeholder="search">
   <div data-bind="draggable: {foreach: filteredSongs, collection: songs }">
     <div class="mox-item">
       <span data-bind="click: $component.remove" class="pull-right glyphicon glyphicon-remove"></span>
