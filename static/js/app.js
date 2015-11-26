@@ -28,7 +28,11 @@ require(['jquery', 'knockout', 'notifyjs'], function( $, ko ) {
 
     $(document).ready(function(){
 
-        ko.options.deferUpdates = true;
+        // if true causes bug when
+        // 1) adding song to playlist
+        // 2) deleting playlist_song
+        // 3) adding same song again
+        //ko.options.deferUpdates = true;
 
         $( document ).ajaxError(function( event, xhr, settings, thrownError ) {
             $.notify(xhr.responseText, "error");
