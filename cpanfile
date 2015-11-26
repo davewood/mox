@@ -16,6 +16,7 @@ requires 'File::Temp';
 requires 'JSON';
 requires 'MIME::Base64';
 requires 'MIME::Types';
+requires 'HTTP::Throwable';
 
 test_requires 'Test::More';
 test_requires 'Selenium::Remote::Driver';

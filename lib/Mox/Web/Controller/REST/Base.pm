@@ -2,6 +2,7 @@ package Mox::Web::Controller::REST::Base;
 use Moose;
 use JSON qw/ to_json /;
 use Try::Tiny;
+use HTTP::Throwable::Factory qw/http_throw/;
 extends 'Mox::Web::Controller::Base';
 
 has 'resultset_name' => (
@@ -44,27 +45,20 @@ sub root_GET {
 sub root_PUT {
     my ( $self, $req ) = @_;
 
-    my ($error, $item);
     try {
         my $item_rs = $self->resultset;
         my $p = $item_rs->validate_create( $req->parameters );
-        $item = $item_rs->create($p);
+        my $item = $item_rs->create($p);
+        [
+            200,
+            [ 'Content-Type' => 'application/json' ],
+            [ to_json( { $item->get_columns } ) ]
+        ];
     }
     catch {
         my $e = shift;
-        $error = [
-            422,
-            [ 'Content-Type' => 'text/plain' ],
-            [ "$e" ]
-        ];
+        http_throw( BadRequest => { message => "$e" } );
     };
-    return $error if $error;
-
-    return [
-        200,
-        [ 'Content-Type' => 'application/json' ],
-        [ to_json( { $item->get_columns } ) ]
-    ];
 }
 
 sub item_POST {

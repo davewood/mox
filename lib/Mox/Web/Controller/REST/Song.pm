@@ -4,6 +4,7 @@ use Try::Tiny;
 use JSON qw/ to_json /;
 use MIME::Base64 qw//;
 use MIME::Types qw//;
+use HTTP::Throwable::Factory qw/http_throw/;
 extends 'Mox::Web::Controller::REST::Base';
 has '+resultset_name' => (default => 'Song');
 
@@ -30,60 +31,45 @@ sub _process_mime {
 sub root_PUT {
     my ( $self, $req ) = @_;
 
-    my $params = $req->parameters;
-    $self->_process_upload($params);
-    $self->_process_mime($params);
-
-    my ($error, $item);
     try {
+        my $params = $req->parameters;
+        $self->_process_upload($params);
+        $self->_process_mime($params);
+
         my $item_rs = $self->resultset;
-        my $p = $item_rs->validate_create( $params );
-        $item = $item_rs->create($p);
+        my $p       = $item_rs->validate_create( $params );
+        my $item    = $item_rs->create($p);
+        [
+            200,
+            [ 'Content-Type' => 'application/json' ],
+            [ to_json( { $item->get_columns } ) ]
+        ];
     }
     catch {
         my $e = shift;
-        $error = [
-            422,
-            [ 'Content-Type' => 'text/plain' ],
-            [ "$e" ]
-        ];
+        http_throw( BadRequest => { message => "$e" } );
     };
-    return $error if $error;
-
-    return [
-        200,
-        [ 'Content-Type' => 'application/json' ],
-        [ to_json( { $item->get_columns } ) ]
-    ];
 }
 
 sub data_GET {
     my ($self, $req, $id) = @_;
 
-    my ($error, $item, $fh);
     try {
-        $item = $self->_get_item($id);
+        my $item = $self->_get_item($id);
         my $path = $item->file->stringify;
-        $fh = $item->file->openr;
+        my $fh   = $item->file->openr;
         Plack::Util::set_io_path( $fh, $path ); # needed for XSendfile header
+        $req->encoding(undef); # send binary file
+        [
+            200,
+            [ 'Content-Type' => $item->type, 'Content-Length' => -s $fh ],
+            $fh
+        ];
     }
     catch {
         my $e = shift;
-        $error = [
-            400,
-            [ 'Content-Type' => 'text/plain' ],
-            [ "$e" ]
-        ];
+        http_throw( BadRequest => { message => "$e" } );
     };
-
-    return $error if $error;
-
-    $req->encoding(undef); # send binary file
-    return [
-        200,
-        [ 'Content-Type' => $item->type, 'Content-Length' => -s $fh ],
-        $fh
-    ];
 }
 
 __PACKAGE__->meta->make_immutable;
